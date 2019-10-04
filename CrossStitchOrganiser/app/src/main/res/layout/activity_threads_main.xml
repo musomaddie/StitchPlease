@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/threadsFullInventoryNav"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/threads_inventory_full_title"
+        android:onClick="onFullInvNavClick"
+        />
+
+    <Button
+        android:id="@+id/threadsInventoryColourNav"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/threads_inventory_colour_title"
+        android:onClick="onInvColourNavClick"
+        />
+    <Button
+        android:id="@+id/threadsAddNav"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/threads_add_title"
+        android:onClick="onAddThreadNavClick"
+        />
+    <Button
+        android:id="@+id/threadsBack"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        android:onClick="onThreadsBackClick"
+        />
+
+
+</LinearLayout>

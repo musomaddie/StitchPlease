@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/projectsCurrentNav"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/projects_current_title"
+        android:onClick="onCurrentProNavClick"
+        />
+
+    <Button
+        android:id="@+id/projectsWishlistNav"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/projects_wishlist_title"
+        android:onClick="onWishlistNavClick"
+        />
+
+    <Button
+        android:id="@+id/projectsAddNav"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/projects_add_title"
+        android:onClick="onProjectsAddNavClick"
+        />
+
+    <Button
+        android:id="@+id/projectsBack"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        android:onClick="onProjectsBackClick"
+        />
+
+
+</LinearLayout>

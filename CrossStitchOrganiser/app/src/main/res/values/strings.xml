@@ -1,0 +1,18 @@
+<resources>
+
+    <string name="app_name">CrossStitchOrganiser</string>
+    <string name="back">Back</string>
+    <string name="placeholder">PLACEHOLDER: should not be seen</string>
+
+    <string name="projects_add_title">Add a New Project</string>
+    <string name="projects_current_title">Current Projects</string>
+    <string name="projects_title">Projects</string>
+    <string name="projects_wishlist_title">Wish List</string>
+
+    <string name="shopping_list_title">Shopping List</string>
+
+    <string name="threads_add_title">Add Thread</string>
+    <string name="threads_inventory_colour_title">Inventory By Colour</string>
+    <string name="threads_inventory_full_title">Full Inventory</string>
+    <string name="threads_title">Threads</string>
+</resources>

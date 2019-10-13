@@ -2,13 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    android:layout_height="match_parent">
     <TextView
         android:id="@+id/threadsAddTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/threads_add_title"
-        />
+		/>
+	<EditText
+		android:id="@+id/threadsAddTextDmc"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:inputType="text"
+		android:hint="@string/placeholder_thread_add_dmc"
+		/>
+	<Spinner
+		android:id="@+id/threadsAddColourSpinner"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		/>
+	<Button
+		android:id="@+id/threadsAddSubmit"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/submit"
+		android:onClick="onThreadsAddSubmitClick"
+		/>
     <Button
         android:id="@+id/threadsAddBack"
         android:layout_width="fill_parent"

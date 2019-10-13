@@ -15,8 +15,6 @@ public enum Colour {
     WHITE,
     YELLOW;
 
-    // TODO: when writing the add method create a drop down box so that the user selects from these.
-
     public static List<Thread> loadThreads(Colour c) {
         String colourName = c.toString();
         // query the database using the appropriate colour name

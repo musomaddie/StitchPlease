@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Colour {
-    BLACK,
-    BLUE,
-    GREY,
+	GREY,
+	WHITE,
+	BLACK,
+	RED,
+	ORANGE,
+	YELLOW,
     GREEN,
+    BLUE,
     PURPLE,
-    ORANGE,
-    PINK,
-    RED,
-    WHITE,
-    YELLOW;
+    PINK;
 
     public static List<Thread> loadThreads(Colour c) {
         String colourName = c.toString();

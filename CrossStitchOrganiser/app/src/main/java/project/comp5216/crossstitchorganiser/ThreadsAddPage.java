@@ -143,7 +143,7 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
                 }
             }.execute().get();
         } catch(Exception ex) {
-            Log.e("readItemsFromDatabase", ex.getStackTrace().toString());
+			Log.e(APP_TAG, ex.getStackTrace().toString());
         }
 	}
 

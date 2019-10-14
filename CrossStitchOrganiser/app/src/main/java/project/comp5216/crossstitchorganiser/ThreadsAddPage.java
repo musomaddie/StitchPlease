@@ -28,6 +28,9 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 		EditText dmcET = findViewById(R.id.threadsAddTextDmc);
 		dmc = dmcET.getText().toString();
 		if (dmc.equals("")) {
+			Toast.makeText(this,
+					getResources().getString(R.string.failure_add_thread_no_dmc),
+					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		EditText amountET = findViewById(R.id.threadsAddAmount);

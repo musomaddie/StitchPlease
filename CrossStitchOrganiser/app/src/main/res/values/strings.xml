@@ -3,6 +3,8 @@
     <string name="app_name">CrossStitchOrganiser</string>
 	<string name="back">Back</string>
 
+	<string name="failure_add_thread_no_dmc">Could not add thread. Please specify a DMC number</string>
+
 	<string name="placeholder">PLACEHOLDER: should not be seen</string>
 	<string name="placeholder_thread_add_dmc">DMC Number</string>
 	<string name="placeholder_thread_add_amount">How much do you own? (Skeins)</string>

@@ -27,7 +27,6 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 		EditText dmcET = findViewById(R.id.threadsAddTextDmc);
 		dmc = dmcET.getText().toString();
 		if (dmc.equals("")) {
-			Log.d(APP_TAG, "NO DMC ENTERED :( ");
 			return;
 		}
 		EditText amountET = findViewById(R.id.threadsAddAmount);
@@ -36,7 +35,7 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 		} catch (NumberFormatException e) {
 			amount = 1.0;
 		}
-
+		// TODO: check if it already exists: if so just ADD the amount to it
 		Thread thread = new Thread(dmc, colour, amount);
 	}
 

@@ -12,6 +12,7 @@ import android.widget.Spinner;
 public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelectedListener {
     private static final String APP_TAG = "Cross Stitch Organiser";
 	private String dmc;
+	private double amount;
 	private Colour colour;
 
     @Override
@@ -25,8 +26,18 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 	public void onThreadsAddSubmitClick(View view) {
 		EditText dmcET = findViewById(R.id.threadsAddTextDmc);
 		dmc = dmcET.getText().toString();
-		Log.d(APP_TAG, "User entered: " + dmc);
-		Log.d(APP_TAG, "Colour was: " + colour);
+		if (dmc.equals("")) {
+			Log.d(APP_TAG, "NO DMC ENTERED :( ");
+			return;
+		}
+		EditText amountET = findViewById(R.id.threadsAddAmount);
+		try {
+			amount = Double.parseDouble(amountET.getText().toString());
+		} catch (NumberFormatException e) {
+			amount = 1.0;
+		}
+
+		Thread thread = new Thread(dmc, colour, amount);
 	}
 
     public void onThreadsAddBackClick(View view) {

@@ -20,6 +20,13 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		/>
+	<EditText
+		android:id="@+id/threadsAddAmount"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:inputType="numberDecimal"
+		android:hint="@string/placeholder_thread_add_amount"
+		/>
 	<Button
 		android:id="@+id/threadsAddSubmit"
 		android:layout_width="fill_parent"

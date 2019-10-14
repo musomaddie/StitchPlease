@@ -26,7 +26,6 @@ public class Thread {
         this.amountOwned = amountOwned;
         this.amountNeeded = 0;
         this.projects = new ArrayList<Project>();
-
         Log.i(APP_TAG, "Created new thread: " + this.toString());
     }
 

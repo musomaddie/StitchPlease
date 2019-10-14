@@ -9,9 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelectedListener {
     private static final String APP_TAG = "Cross Stitch Organiser";
 	private String dmc;
@@ -38,14 +35,9 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
     }
 
 	private void setUpColourSpinner() {
-		Spinner spinner = (Spinner) findViewById(R.id.threadsAddColourSpinner);
-		List<String> colourList = new ArrayList<String>();
-		Colour [] colours = Colour.values();
-		for (Colour c : colours) {
-			colourList.add(c.toString());
-		}
+		Spinner spinner = findViewById(R.id.threadsAddColourSpinner);
 		ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,
-				colours);
+				Colour.makeList());
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(this);
@@ -53,7 +45,7 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 
 	// Spinner methods needed for interface
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-		colour = (Colour) parent.getItemAtPosition(pos);
+		colour = Colour.findColour((String) parent.getItemAtPosition(pos));
     }
 
     public void onNothingSelected(AdapterView<?> parent) {

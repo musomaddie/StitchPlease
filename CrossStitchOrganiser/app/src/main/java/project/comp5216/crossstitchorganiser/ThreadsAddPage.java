@@ -56,11 +56,8 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 			amount = 1.0;
 		}
 		if (existing()) {
-			// TODO: handle correct database updates here
 			return;
 		}
-		// TODO: check if it already exists: if so just ADD the amount to it,
-		// otherwise create new thread
 		newThread = new Thread(dmc, colour, amount);
 		saveThreadToDatabase();
 		Toast.makeText(this,
@@ -98,6 +95,10 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 				newThread = new Thread(
 						dmc, colour, thread.getAmountOwned() + amount);
 				updateDatabase();
+				Toast.makeText(this,
+						getResources().getString(R.string.success_thread_updated) 
+						+ newThread.getDmc(), 
+						Toast.LENGTH_SHORT).show();
 				return true;
 			}
 		}

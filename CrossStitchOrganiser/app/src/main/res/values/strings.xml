@@ -18,6 +18,7 @@
 	<string name="submit">Submit</string>
 
 	<string name="success_thread_creation">Successfully added thread: </string>
+	<string name="success_thread_updated">Successfully updated thread: </string>
 
 	<string name="threads_add_title">Add Thread</string>
     <string name="threads_inventory_colour_title">Inventory By Colour</string>

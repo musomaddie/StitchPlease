@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {ThreadDatabaseItem.class}, version=1)
+@Database(entities = {ThreadDatabaseItem.class}, version=1, exportSchema=false)
 
 public abstract class OrganiserDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "organiser_db";

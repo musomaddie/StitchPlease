@@ -1,6 +1,7 @@
 package project.comp5216.crossstitchorganiser;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,15 +13,25 @@ import android.widget.Toast;
 
 public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelectedListener {
     private static final String APP_TAG = "Cross Stitch Organiser";
+
 	private String dmc;
 	private double amount;
 	private Colour colour;
+	private Thread newThread;
+
+    private ThreadDao threadDao;
+	private OrganiserDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		// Loading visual content
         setContentView(R.layout.activity_threads_add);
 		setUpColourSpinner();
+		// Loading the database
+		db = OrganiserDatabase.getDatabase(this.getApplication().getApplicationContext());
+		threadDao = db.threadDao();
+
         Log.v(APP_TAG, "Loading threads add page");
     }
 
@@ -33,6 +44,7 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
+
 		EditText amountET = findViewById(R.id.threadsAddAmount);
 		try {
 			amount = Double.parseDouble(amountET.getText().toString());
@@ -41,9 +53,10 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 		}
 		// TODO: check if it already exists: if so just ADD the amount to it,
 		// otherwise create new thread
-		Thread thread = new Thread(dmc, colour, amount);
+		newThread = new Thread(dmc, colour, amount);
+		saveThreadToDatabase();
 		Toast.makeText(this,
-				getResources().getString(R.string.success_thread_creation) + thread.toString(),
+				getResources().getString(R.string.success_thread_creation) + newThread.toString(),
 				Toast.LENGTH_SHORT).show();
 	}
 
@@ -68,5 +81,19 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 
     public void onNothingSelected(AdapterView<?> parent) {
 		colour = null;
+    }
+
+    private void saveThreadToDatabase() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+				threadDao.insert(new ThreadDatabaseItem(newThread.getDmc(),
+							newThread.getColour().toString(),
+							newThread.getAmountOwned(),
+							newThread.getAmountNeeded()));
+				Log.i(APP_TAG, "Saved thread: " + newThread.toString() + " to database");
+                return null;
+            }
+        }.execute();
     }
 }

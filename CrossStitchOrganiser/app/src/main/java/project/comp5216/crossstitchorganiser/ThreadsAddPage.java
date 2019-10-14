@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelectedListener {
     private static final String APP_TAG = "Cross Stitch Organiser";
 
@@ -18,6 +21,7 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 	private double amount;
 	private Colour colour;
 	private Thread newThread;
+	private List<Thread> allExistingThreads;
 
     private ThreadDao threadDao;
 	private OrganiserDatabase db;
@@ -51,6 +55,10 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 		} catch (NumberFormatException e) {
 			amount = 1.0;
 		}
+		if (existing()) {
+			// TODO: handle correct database updates here
+			return;
+		}
 		// TODO: check if it already exists: if so just ADD the amount to it,
 		// otherwise create new thread
 		newThread = new Thread(dmc, colour, amount);
@@ -82,6 +90,62 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
     public void onNothingSelected(AdapterView<?> parent) {
 		colour = null;
     }
+
+	private boolean existing() {
+		loadAllFromDatabase();
+		for (Thread thread : allExistingThreads) {
+			if (thread.getDmc().equals(dmc)) {
+				newThread = new Thread(
+						dmc, colour, thread.getAmountOwned() + amount);
+				updateDatabase();
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void updateDatabase() {
+        try {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+					threadDao.updateAmountOwned
+						(newThread.getAmountOwned(), newThread.getDmc());
+					Log.i(APP_TAG, "Updated " + newThread.getDmc() + " in database");
+                    return null;
+                }
+            }.execute().get();
+        } catch(Exception ex) {
+            Log.e("readItemsFromDatabase", ex.getStackTrace().toString());
+		}
+	}
+
+	private void loadAllFromDatabase() {
+        try {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+					List<ThreadDatabaseItem> itemsFromDB = threadDao.listAll();
+					allExistingThreads = new ArrayList<Thread>();
+                    if (itemsFromDB != null && itemsFromDB.size() > 0) {
+						for (ThreadDatabaseItem item: itemsFromDB) {
+							// these are the only attributes we care about right
+							// now: no need to load the project(s)
+							allExistingThreads.add(new Thread(
+										item.getDmc(), 
+										Colour.findColour(item.getColour()), 
+										item.getAmountOwned()));
+							Log.i(APP_TAG, "Read item from database: " + item.getDmc());
+                        }
+                    }
+                    return null;
+                }
+            }.execute().get();
+        } catch(Exception ex) {
+            Log.e("readItemsFromDatabase", ex.getStackTrace().toString());
+        }
+	}
+
 
     private void saveThreadToDatabase() {
         new AsyncTask<Void, Void, Void>() {

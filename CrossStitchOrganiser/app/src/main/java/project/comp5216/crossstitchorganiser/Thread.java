@@ -58,7 +58,7 @@ public class Thread {
     }
 
     public String toString() {
-        return this.dmc + ": " + this.colour + "(" + this.amountOwned + ")";
+		return this.dmc;
     }
 
 }

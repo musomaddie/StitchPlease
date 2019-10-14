@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelectedListener {
     private static final String APP_TAG = "Cross Stitch Organiser";
@@ -35,8 +36,12 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 		} catch (NumberFormatException e) {
 			amount = 1.0;
 		}
-		// TODO: check if it already exists: if so just ADD the amount to it
+		// TODO: check if it already exists: if so just ADD the amount to it,
+		// otherwise create new thread
 		Thread thread = new Thread(dmc, colour, amount);
+		Toast.makeText(this,
+				getResources().getString(R.string.success_thread_creation) + thread.toString(),
+				Toast.LENGTH_SHORT).show();
 	}
 
     public void onThreadsAddBackClick(View view) {

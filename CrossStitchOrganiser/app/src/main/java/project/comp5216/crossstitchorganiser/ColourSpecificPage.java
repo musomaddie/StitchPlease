@@ -2,6 +2,7 @@ package project.comp5216.crossstitchorganiser;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ColourSpecificPage extends Activity {
@@ -20,22 +22,27 @@ public class ColourSpecificPage extends Activity {
     private List<Thread> threadsToView;
     ArrayAdapter<Thread> threadAdapter;
     private Colour thisColour;
+    private ThreadDao threadDao;
+	private OrganiserDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colour_specific);
 
+		// Setting up db
+		db = OrganiserDatabase.getDatabase(this.getApplication().getApplicationContext());
+		threadDao = db.threadDao();
+
         // Find the correct colour and load the appropriate information.
         thisColour = (Colour) getIntent().getSerializableExtra("colour");
         TextView title = findViewById(R.id.specificColourTitle);
         title.setText(thisColour.toString());
-        // TODO: currently this is just dummy data, will need to fetch appropriate info from database.
-        // load all the threads of this colour
+
         Log.v(APP_TAG, "Loading Colour specific page for: " + thisColour);
 
         listView = findViewById(R.id.threadListForSpecificColour);
-        threadsToView = Colour.loadThreads(thisColour);
+		loadThreads();
         threadAdapter = new ThreadAdapter(this, threadsToView);
         listView.setAdapter(threadAdapter);
 
@@ -65,4 +72,33 @@ public class ColourSpecificPage extends Activity {
             }
         });
     }
+
+	private void loadThreads() {
+        try {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+					List<ThreadDatabaseItem> itemsFromDB = threadDao.listAll();
+					threadsToView = new ArrayList<Thread>();
+                    if (itemsFromDB != null && itemsFromDB.size() > 0) {
+						for (ThreadDatabaseItem item: itemsFromDB) {
+							// For display in list view, we still don't care
+							// about the projects
+							Colour threadColour = Colour.findColour(item.getColour());
+							if (thisColour == threadColour) {
+								threadsToView.add(new Thread(
+											item.getDmc(), 
+											threadColour,
+											item.getAmountOwned()));
+								Log.i(APP_TAG, "Read item from database: " + item.getDmc());
+							}
+                        }
+                    }
+                    return null;
+                }
+            }.execute().get();
+        } catch(Exception ex) {
+			Log.e(APP_TAG, ex.getStackTrace().toString());
+        }
+	}
 }

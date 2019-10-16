@@ -93,15 +93,6 @@ public enum Colour {
 	public abstract String transformText();
 	public abstract ColorDrawable findColourResource(Context context);
 
-    public static List<Thread> loadThreads(Colour c) {
-        String colourName = c.toString();
-        // query the database using the appropriate colour name
-        List<Thread> theseThreads = new ArrayList<Thread>();
-        theseThreads.add(new Thread("310", Colour.BLACK, 1.2));
-        theseThreads.add(new Thread("550", Colour.PURPLE, 1.1));
-        return theseThreads;
-    }
-
 	public static List<String> makeList() {
 		List<String> colourList = new ArrayList<String>();
 		for (Colour c : Colour.values()) {

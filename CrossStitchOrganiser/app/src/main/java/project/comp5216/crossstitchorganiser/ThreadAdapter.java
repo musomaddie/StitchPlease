@@ -40,7 +40,7 @@ public class ThreadAdapter extends ArrayAdapter {
 
 		// Set the colour of the rectangle
 		View squareColour = convertView.findViewById(R.id.colourRectangle);
-		squareColour.setBackground(findColour(thread));
+		squareColour.setBackground(thread.getColour().findColourResource(getContext()));
 
 		// populate the amount text
 		TextView amount = convertView.findViewById(R.id.listItemAmount);
@@ -49,39 +49,4 @@ public class ThreadAdapter extends ArrayAdapter {
 
         return convertView;
     }
-
-	private ColorDrawable findColour(Thread thread) {
-		Log.d(APP_TAG, thread.getColour().toString());
-		if (thread.getColour() == Colour.GREY) {
-			return new ColorDrawable(getContext().getResources().getColor(R.color.greyColour));
-		}
-		if (thread.getColour() == Colour.WHITE) {
-			return new ColorDrawable(getContext().getResources().getColor(R.color.whiteColour));
-		}
-		if (thread.getColour() == Colour.BLACK) {
-			return new ColorDrawable(getContext().getResources().getColor(R.color.blackColour));
-		}
-		if (thread.getColour() == Colour.RED) {
-			return new ColorDrawable(getContext().getResources().getColor(R.color.redColour));
-		}
-		if (thread.getColour() == Colour.ORANGE) {
-			return new ColorDrawable(getContext().getResources().getColor(R.color.orangeColour));
-		}
-		if (thread.getColour() == Colour.YELLOW) {
-			return new ColorDrawable(getContext().getResources().getColor(R.color.yellowColour));
-		}
-		if (thread.getColour() == Colour.GREEN) {
-			return new ColorDrawable(getContext().getResources().getColor(R.color.greenColour));
-		}
-		if (thread.getColour() == Colour.BLUE) {
-			return new ColorDrawable(getContext().getResources().getColor(R.color.blueColour));
-		}
-		if (thread.getColour() == Colour.PURPLE) {
-			return new ColorDrawable(getContext().getResources().getColor(R.color.purpleColour));
-		}
-		if (thread.getColour() == Colour.PINK) {
-			return new ColorDrawable(getContext().getResources().getColor(R.color.pinkColour));
-		}
-		return new ColorDrawable(getContext().getResources().getColor(R.color.greyColour));
-	}
 }

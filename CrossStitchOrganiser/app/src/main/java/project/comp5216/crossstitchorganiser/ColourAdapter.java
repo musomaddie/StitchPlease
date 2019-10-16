@@ -34,6 +34,9 @@ public class ColourAdapter extends ArrayAdapter {
         // Lookup view for colour population
         TextView colourName = convertView.findViewById(R.id.listItemColour);
         colourName.setText(colour.toString());
+		
+		View squareColour = convertView.findViewById(R.id.colourRectangle);
+		squareColour.setBackground(colour.findColourResource(getContext()));
 
         return convertView;
     }

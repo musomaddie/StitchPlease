@@ -3,7 +3,10 @@ package project.comp5216.crossstitchorganiser;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
 public enum Colour {
+
 	GREY {public String transformText() { return "Grey"; }},
 	WHITE {public String transformText() { return "White"; }},
 	BLACK {public String transformText() { return "Black"; }},
@@ -36,7 +39,7 @@ public enum Colour {
 
 	public static Colour findColour(String colour) {
 		for (Colour c : Colour.values()) {
-			if (c.transformText().equals(colour)) {
+			if (c.toString().equals(colour)) {
 				return c;
 			}
 		} 

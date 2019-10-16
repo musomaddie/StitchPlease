@@ -2,6 +2,7 @@ package project.comp5216.crossstitchorganiser;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,22 +21,28 @@ public class ThreadsInventoryFullPage extends Activity {
     private ListView listView;
     private List<Thread> allThreads;
     private ArrayAdapter<Thread> threadAdapter;
+    private ThreadDao threadDao;
+	private OrganiserDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_threads_full_inventory);
-        Log.v(APP_TAG, "Loading full inventory page");
+
+		// Setting up the db
+		db = OrganiserDatabase.getDatabase(this.getApplication().getApplicationContext());
+		threadDao = db.threadDao();
 
         // Setting up the list view
         listView = (ListView) findViewById(R.id.threadInventoryList);
-        setUpThreadData();
+		loadAllThreads();
         threadAdapter = new ThreadAdapter(this, allThreads);
         listView.setAdapter(threadAdapter);
 
 
         // item listener time!!
         setUpThreadItemListener();
+        Log.v(APP_TAG, "Loading full inventory page");
     }
 
     public void onFullInvBackClick(View view) {
@@ -61,11 +68,30 @@ public class ThreadsInventoryFullPage extends Activity {
         });
     }
 
-    private void setUpThreadData() {
-        // TODO: this is dummy data, actually load the data from the user
-        allThreads = new ArrayList<Thread>();
-        allThreads.add(new Thread("310", Colour.BLACK, 1.2));
-        allThreads.add(new Thread("666", Colour.RED, 0.3));
-        allThreads.add(new Thread("550", Colour.PURPLE, 4));
-    }
+	private void loadAllThreads() {
+        try {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+					List<ThreadDatabaseItem> itemsFromDB = threadDao.listAll();
+					allThreads = new ArrayList<Thread>();
+                    if (itemsFromDB != null && itemsFromDB.size() > 0) {
+						for (ThreadDatabaseItem item: itemsFromDB) {
+							// For display in list view, we still don't care
+							// about the projects
+							allThreads.add(new Thread(
+										item.getDmc(), 
+										Colour.findColour(item.getColour()), 
+										item.getAmountOwned()));
+							Log.i(APP_TAG, "Read item from database: " + item.getDmc());
+                        }
+                    }
+                    return null;
+                }
+            }.execute().get();
+        } catch(Exception ex) {
+			Log.e(APP_TAG, ex.getStackTrace().toString());
+        }
+	}
+
 }

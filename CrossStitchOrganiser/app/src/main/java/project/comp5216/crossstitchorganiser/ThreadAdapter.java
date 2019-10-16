@@ -1,6 +1,7 @@
 package project.comp5216.crossstitchorganiser;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,14 +34,54 @@ public class ThreadAdapter extends ArrayAdapter {
             convertView = LayoutInflater.from(getContext())
                     .inflate(R.layout.list_item_thread, parent, false);
         }
-        // Lookup view for colour population
-        TextView colourName = convertView.findViewById(R.id.listItemThread);
-        colourName.setText(thread.toString());
+		// populate the DMC text
+        TextView dmc = convertView.findViewById(R.id.listItemThread);
+        dmc.setText(thread.toString());
+
+		// Set the colour of the rectangle
+		View squareColour = convertView.findViewById(R.id.colourRectangle);
+		squareColour.setBackground(findColour(thread));
+
+		// populate the amount text
+		TextView amount = convertView.findViewById(R.id.listItemAmount);
+		Double a = thread.getAmountOwned();
+		amount.setText(a.toString());
 
         return convertView;
     }
 
-
+	private ColorDrawable findColour(Thread thread) {
+		Log.d(APP_TAG, thread.getColour().toString());
+		if (thread.getColour() == Colour.GREY) {
+			return new ColorDrawable(getContext().getResources().getColor(R.color.greyColour));
+		}
+		if (thread.getColour() == Colour.WHITE) {
+			return new ColorDrawable(getContext().getResources().getColor(R.color.whiteColour));
+		}
+		if (thread.getColour() == Colour.BLACK) {
+			return new ColorDrawable(getContext().getResources().getColor(R.color.blackColour));
+		}
+		if (thread.getColour() == Colour.RED) {
+			return new ColorDrawable(getContext().getResources().getColor(R.color.redColour));
+		}
+		if (thread.getColour() == Colour.ORANGE) {
+			return new ColorDrawable(getContext().getResources().getColor(R.color.orangeColour));
+		}
+		if (thread.getColour() == Colour.YELLOW) {
+			return new ColorDrawable(getContext().getResources().getColor(R.color.yellowColour));
+		}
+		if (thread.getColour() == Colour.GREEN) {
+			return new ColorDrawable(getContext().getResources().getColor(R.color.greenColour));
+		}
+		if (thread.getColour() == Colour.BLUE) {
+			return new ColorDrawable(getContext().getResources().getColor(R.color.blueColour));
+		}
+		if (thread.getColour() == Colour.PURPLE) {
+			return new ColorDrawable(getContext().getResources().getColor(R.color.purpleColour));
+		}
+		if (thread.getColour() == Colour.PINK) {
+			return new ColorDrawable(getContext().getResources().getColor(R.color.pinkColour));
+		}
+		return new ColorDrawable(getContext().getResources().getColor(R.color.greyColour));
+	}
 }
-
-

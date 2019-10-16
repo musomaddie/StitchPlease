@@ -2,5 +2,16 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+	<color name="colorAccent">#FF4081</color>
+
+	<color name="greyColour">#DDDDDD</color>
+	<color name="whiteColour">#FFFFFF</color>
+	<color name="blackColour">#000000</color>
+	<color name="redColour">#ed0707</color>
+	<color name="orangeColour">#ed7e07</color>
+	<color name="yellowColour">#f7ef0a</color>
+	<color name="greenColour">#0af749</color>
+	<color name="blueColour">#0a85f7</color>
+	<color name="purpleColour">#9c0af7</color>
+	<color name="pinkColour">#f70ad4</color>
 </resources>

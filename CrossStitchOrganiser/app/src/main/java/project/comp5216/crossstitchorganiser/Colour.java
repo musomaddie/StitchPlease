@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 
 public enum Colour {
 
@@ -102,6 +101,7 @@ public enum Colour {
 	}
 
 	public static Colour findColour(String colour) {
+		colour = colour.toUpperCase();
 		for (Colour c : Colour.values()) {
 			if (c.toString().equals(colour)) {
 				return c;

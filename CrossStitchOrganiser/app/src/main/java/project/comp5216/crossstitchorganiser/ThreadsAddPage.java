@@ -55,10 +55,10 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 		} catch (NumberFormatException e) {
 			amount = 1.0;
 		}
+		newThread = new Thread(dmc, colour, amount);
 		if (existing()) {
 			return;
 		}
-		newThread = new Thread(dmc, colour, amount);
 		saveThreadToDatabase();
 		Toast.makeText(this,
 				getResources().getString(R.string.success_thread_creation) + newThread.toString(),
@@ -122,6 +122,7 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 	}
 
 	private void loadAllFromDatabase() {
+    	// TODO: something in here that is causing the colour to disappear. Is it just taking too long?
         try {
             new AsyncTask<Void, Void, Void>() {
                 @Override

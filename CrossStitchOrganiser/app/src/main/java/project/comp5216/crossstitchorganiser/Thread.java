@@ -19,6 +19,11 @@ public class Thread {
     private double amountNeeded; // the amount of thread the user needs for all projects -> calculated by us based on projects reqs.
     private List<Project> projects; // the projects this thread is used in
 
+	public Thread(String dmc, Colour colour, double amountOwned, double amountNeeded) {
+		this(dmc, colour, amountOwned);
+		this.amountNeeded = amountNeeded;
+	}
+
     public Thread(String dmc, Colour colour, double amountOwned) {
         this.dmc = dmc;
         this.colour = colour;

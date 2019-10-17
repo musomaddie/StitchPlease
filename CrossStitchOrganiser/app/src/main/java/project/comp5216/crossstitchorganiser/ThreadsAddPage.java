@@ -122,7 +122,6 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 	}
 
 	private void loadAllFromDatabase() {
-    	// TODO: something in here that is causing the colour to disappear. Is it just taking too long?
         try {
             new AsyncTask<Void, Void, Void>() {
                 @Override

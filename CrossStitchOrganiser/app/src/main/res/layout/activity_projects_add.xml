@@ -1,20 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/projectsAddTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/projects_add_title"
-        />
 
     <Button
         android:id="@+id/projectsAddBack"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/back"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="-4dp"
+        android:layout_marginTop="685dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="-2dp"
         android:onClick="onProjectsAddBackClick"
-        />
-</LinearLayout>
+        android:text="@string/back" />
+
+    <EditText
+        android:id="@+id/editText_projectName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="69dp"
+        android:ems="10"
+        android:hint="Project Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editText_projectDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_projectName"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Project Description"
+        android:inputType="textPersonName" />
+
+    <ImageView
+        android:id="@+id/addProject_imageView"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_below="@+id/button_addProject_thread"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="54dp"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <Button
+        android:id="@+id/button_addNewProject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="113dp"
+        android:text="@string/projects_add_title" />
+
+    <EditText
+        android:id="@+id/editText_colour"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_projectDescription"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="100dp"
+        android:ems="10"
+        android:hint="Colour"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/editText_amount"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_projectDescription"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="100dp"
+        android:layout_toEndOf="@+id/editText_colour"
+        android:ems="10"
+        android:hint="amount"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/button_addProject_thread"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_colour"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/threads_add_title" />
+
+    <Button
+        android:id="@+id/button_addImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="239dp"
+        android:layout_toEndOf="@+id/addProject_imageView"
+        android:text="choose img" />
+
+    <Button
+        android:id="@+id/button_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="241dp"
+        android:layout_toEndOf="@+id/button_addImage"
+        android:text="Camera" />
+
+</RelativeLayout>

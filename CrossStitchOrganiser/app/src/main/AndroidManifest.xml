@@ -20,7 +20,8 @@
 
         <activity android:name=".ProjectSpecificPage"> </activity>
         <activity android:name=".ProjectsAddPage"> </activity>
-        <activity android:name=".ProjectsCurrentPage"> </activity>
+        <activity android:name=".ProjectsCurrentPage"
+            android:parentActivityName=".ProjectsAddPage"> </activity>
         <activity android:name=".ProjectsMainPage"> </activity>
         <activity android:name=".ProjectsWishlistPage"> </activity>
 
@@ -32,6 +33,20 @@
         <activity android:name=".ThreadsInventoryFullPage"> </activity>
         <activity android:name=".ThreadsMainPage"> </activity>
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="project.comp5216.crossstitchorganiser"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>

@@ -54,6 +54,10 @@ public class Project {
                 new Thread[this.threadsAmountNeeded.size()]);
     }
 
+	public boolean isWishlist() {
+		return this.isWishlist;
+	}
+
     public String toString() {
         return this.name + ": " + this.threadsAmountNeeded.toString();
     }

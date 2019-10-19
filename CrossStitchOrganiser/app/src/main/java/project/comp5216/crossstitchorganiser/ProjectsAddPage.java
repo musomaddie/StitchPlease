@@ -31,18 +31,18 @@ public class ProjectsAddPage extends Activity {
         setContentView(R.layout.activity_projects_add);
         Log.v(APP_TAG, "Loading Projects Add Page");
 
+
         // Loading the dynamic thread amount adding!
         LinearLayout ll = (LinearLayout) findViewById(R.id.projectsAddThreadDets);
+        threadDetails = new ArrayList<ThreadDetails>();
         for (int i = 0; i < 3; i++) {
 			View view = LayoutInflater.from(this).inflate(R.layout.view_add_thread_to_project, null);
-			// TODO: the edit text info
 			EditText dmcET = view.findViewById(R.id.projectsAddThreadDmc);
 			EditText amountET = view.findViewById(R.id.projectsAddThreadAmount);
-			threadDetails.add(new ThreadDetails(dmcET, amountET);
+			threadDetails.add(new ThreadDetails(dmcET, amountET));
 			ll.addView(view);
 		}
 
-        threadDetails = new ArrayList<ThreadDetails>();
 
 		// Loading the database
 		db = OrganiserDatabase.getDatabase(this.getApplication().getApplicationContext());
@@ -61,6 +61,16 @@ public class ProjectsAddPage extends Activity {
 		}
 		// TODO: need to check it doesn't already exist!
 		newProject = new Project(projectTitle, false);
+
+		// TODO: save the threads and amount in the DB. for now just add them
+		// (successfully) to the project
+
+		// Going through the thread info now
+		for(ThreadDetails td : threadDetails) {
+			// TODO: sanity check this. (What about invalid inputs?)
+			newProject.addThreadAmount(td.getDmc(), td.getAmount());
+		}
+
 		saveProjectToDatabase();
 	}
 
@@ -94,11 +104,15 @@ class ThreadDetails {
 		this.amountET = amount;
 	}
 
-	public EditText getDmcET() {
-		return this.dmcET;
+	public String getDmc() {
+		return this.dmcET.getText().toString();
 	}
 
-	public EditText getAmountET() {
-		return this.amountET;
+	public double getAmount() {
+		return Double.parseDouble(this.amountET.getText().toString());
+	}
+
+	public String toString() {
+		return this.dmcET.getText().toString();
 	}
 }

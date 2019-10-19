@@ -22,8 +22,9 @@
 		android:id="@+id/projectsAddThreadDets"
 		android:orientation="vertical"
 		android:layout_width="fill_parent"
-		android:layout_height="match_parent"
-		/>
+		android:layout_height="wrap_content"
+		>
+	</LinearLayout>
 
 	<Button
 		android:id="@+id/projectsAddSubmit"

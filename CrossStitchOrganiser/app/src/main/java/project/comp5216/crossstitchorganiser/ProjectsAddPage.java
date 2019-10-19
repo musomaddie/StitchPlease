@@ -23,8 +23,9 @@ public class ProjectsAddPage extends Activity {
 	private List<ThreadDetails> threadDetails;
 	private boolean isWishlist;
 
-    private ProjectDao projectDao;
 	private OrganiserDatabase db;
+    private ProjectDao projectDao;
+    private ProjectThreadDao projectThreadDao;
 
 
     @Override
@@ -47,6 +48,7 @@ public class ProjectsAddPage extends Activity {
 		// Loading the database
 		db = OrganiserDatabase.getDatabase(this.getApplication().getApplicationContext());
 		projectDao = db.projectDao();
+		projectThreadDao = db.projectThreadDao();
 
     }
 

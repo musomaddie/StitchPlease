@@ -48,13 +48,13 @@ public class ProjectsWishlistPage extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Project updateProject = (Project) projectAdapter.getItem(position);
-                Log.i(APP_TAG, "Clicked item " + position + ": " + updateProject.getName());
+                Log.i(APP_TAG, "Clicked item " + position + ": " + updateProject.getTitle());
 
                 Intent intent = new Intent(ProjectsWishlistPage.this,
                         ProjectSpecificPage.class);
 
                 if (intent != null) {
-                    intent.putExtra("name", updateProject.getName());
+                    intent.putExtra("name", updateProject.getTitle());
                     startActivity(intent);
                 }
             }

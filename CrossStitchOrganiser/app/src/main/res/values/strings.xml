@@ -2,8 +2,12 @@
 
     <string name="app_name">CrossStitchOrganiser</string>
 	<string name="back">Back</string>
-
+	
+	<string name="failure_add_project_no_title">Could not create project. Please specify a project title.</string>
+	<string name="failure_add_project_exist_p1">Project: </string>
+	<string name="failure_add_project_exist_p2"> could not be created as it already exists! </string>
 	<string name="failure_add_thread_no_dmc">Could not add thread. Please specify a DMC number</string>
+	<string name="failure_add_thread_project">At least one thread did not have a DMC number and was not added to the project</string>
 
 	<string name="placeholder">PLACEHOLDER: should not be seen</string>
 	<string name="placeholder_project_add_title">Project Title</string>
@@ -22,6 +26,7 @@
 	<string name="shopping_list_title">Shopping List</string>
 	<string name="submit">Submit</string>
 
+	<string name="success_project_add">Successfully added project: </string>
 	<string name="success_thread_creation">Successfully added thread: </string>
 	<string name="success_thread_updated">Successfully updated thread: </string>
 

@@ -21,6 +21,7 @@ public class ProjectsAddPage extends Activity {
 	private String projectTitle;
 	private Project newProject;
 	private List<ThreadDetails> threadDetails;
+	private List<Project> allExistingProjects;
 	private boolean isWishlist;
 
 	private OrganiserDatabase db;
@@ -55,12 +56,14 @@ public class ProjectsAddPage extends Activity {
 	public void onProjectsAddSubmitClick(View view) {
 		EditText titleET = findViewById(R.id.projectsAddTitleChange);
 		projectTitle = titleET.getText().toString();
-		// TODO: need to check it doesn't already exist!
+		if (existing()) {
+			return;
+		}
 		if (projectTitle.equals("")) {
 			Toast.makeText(this,
-					// TODO: update this error message to project
-					getResources().getString(R.string.failure_add_thread_no_dmc),
+					getResources().getString(R.string.failure_add_project_no_title),
 					Toast.LENGTH_SHORT).show();
+			return;
 		}
 		newProject = new Project(projectTitle, isWishlist);
 
@@ -69,12 +72,18 @@ public class ProjectsAddPage extends Activity {
 
 		// Going through the thread info now
 		for(ThreadDetails td : threadDetails) {
-			// TODO: sanity check this. (What about invalid inputs?)
-			newProject.addThreadAmount(td.getDmc(), td.getAmount());
+			String dmc = td.getDmc();
+			if (dmc.equals("")) {
+				// No message as some might be naturally blank
+				continue;
+			}
+			newProject.addThreadAmount(dmc, td.getAmount());
 		}
-		
-
 		saveProjectToDatabase();
+
+		Toast.makeText(this,
+				getResources().getString(R.string.success_project_add),
+				Toast.LENGTH_SHORT).show();
 	}
 
 	public void onProjectsAddMoreThreadsClick(View view) {
@@ -102,23 +111,60 @@ public class ProjectsAddPage extends Activity {
         finish();
     }
 
+    private boolean existing() {
+    	loadAllFromDatabase();
+    	for (Project p : allExistingProjects) {
+			if (p.getTitle().equals(projectTitle)) {
+				// refuse to accept it
+				Toast.makeText(this,
+						getResources().getString(R.string.failure_add_project_exist_p1)
+						+ " " + projectTitle + " " + 
+						+ getResources().getString(R.string.failure_add_project_exist_p2),
+						Toast.LENGTH_SHORT).show();
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void saveProjectToDatabase() {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-				projectDao.insert(new ProjectDatabaseItem(newProject.getName(),
+				projectDao.insert(new ProjectDatabaseItem(newProject.getTitle(),
 							newProject.isWishlist()));
 				Log.i(APP_TAG, "Saved project: " + newProject.toString() + " to database");
                 return null;
             }
         }.execute();
 	}
+
+	private void loadAllFromDatabase() {
+        try {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                	List<ProjectDatabaseItem> itemsFromDB = projectDao.listAll();
+                	allExistingProjects = new ArrayList<Project>();
+                    if (itemsFromDB != null && itemsFromDB.size() > 0) {
+                    	for (ProjectDatabaseItem item: itemsFromDB) {
+                    		allExistingProjects.add(new Project(
+                    					item.getTitle(),
+                    					item.isWishlist()));
+							Log.i(APP_TAG, "Read item from database: " + item.getTitle());
+                        }
+                    }
+                    return null;
+                }
+            }.execute().get();
+        } catch(Exception ex) {
+			Log.e(APP_TAG, ex.getStackTrace().toString());
+        }
+	}
 }
 
 class ThreadDetails {
 
-	// TODO: fix up this class (it's own file??)
-	// needs to store the edit text for each 
 	private EditText dmcET;
 	private EditText amountET;
 
@@ -135,8 +181,8 @@ class ThreadDetails {
 		try {
 			return Double.parseDouble(this.amountET.getText().toString());
 		} catch (NumberFormatException e) {
-			// do shit
-			Log.d("AHHHHHHHHHHHHHHHHHH", "OOPS");
+			// Just returning 1 as a default value.
+			// TODO: mention somewhere this happens!
 			return 1.0;
 		}
 	}

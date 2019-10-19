@@ -22,7 +22,7 @@ public class ProjectSpecificPage  extends Activity {
         setContentView(R.layout.activity_project_specific);
 
         TextView title = findViewById(R.id.specificProjectTitle);
-        title.setText(thisProject.getName());
+        title.setText(thisProject.getTitle());
         Log.v(APP_TAG, "Loading Colour specific page for: " + thisProjectName);
 
         // TODO: will need a list view to list all the threads
@@ -32,7 +32,7 @@ public class ProjectSpecificPage  extends Activity {
         Log.v(APP_TAG, "clicked shopping list from project");
         // TODO: create a shopping list only from this project!
         Intent intent = new Intent(this, ShoppingListPage.class);
-        intent.putExtra("projectsIncluded", thisProject.getName());
+        intent.putExtra("projectsIncluded", thisProject.getTitle());
         startActivity(intent);
     }
 

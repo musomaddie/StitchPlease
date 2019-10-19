@@ -9,31 +9,22 @@ public class Project {
 
     private static final String APP_TAG = "Cross Stitch Organiser";
 
-    private String name; // stores the name of the project
+    private String title; // stores the name of the project
     // TODO: store the image associated with the project here
     private Map<String, Double> threadsAmountNeeded;
     // stores the thread needed mapped to how much is needed for this particular project.
-    private boolean isWishlist; // true if on wishlist, false if not (owned)
-    // TODO: not sure if isWishlist is needed in final product -> could just store
-    //  in two different places
+    private boolean isWishlist;
+    // true if on wishlist, false if not (owned)
 
-    //TODO: not sure which constructor is more appropriate so currently have both
-    public Project(String name, boolean isWishlist) {
-        this.name = name;
+    public Project(String title, boolean isWishlist) {
+        this.title = title;
         this.threadsAmountNeeded = new HashMap<String, Double>();
         this.isWishlist = isWishlist;
         Log.i(APP_TAG, "Created new project: " + this.toString());
     }
 
-    public Project(String name, Map<String, Double> threads, boolean w) {
-        this.name = name;
-        this.threadsAmountNeeded = threads;
-        this.isWishlist = w;
-        Log.i(APP_TAG, "Created new project: " + this.toString());
-    }
-
-    public String getName() {
-        return this.name;
+    public String getTitle() {
+        return this.title;
     }
 
     public void addThreadAmount(String thread, double a) {
@@ -59,6 +50,6 @@ public class Project {
 	}
 
     public String toString() {
-        return this.name + ": " + this.threadsAmountNeeded.toString();
+        return this.title + ": " + this.threadsAmountNeeded.toString();
     }
 }

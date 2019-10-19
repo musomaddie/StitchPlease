@@ -67,11 +67,10 @@ public class ProjectsAddPage extends Activity {
 		}
 		newProject = new Project(projectTitle, isWishlist);
 
-		// TODO: save the threads and amount in the DB. for now just add them
-		// (successfully) to the project
 
 		// Going through the thread info now
 		for(ThreadDetails td : threadDetails) {
+			// TODO: deal with the case where added to this project twice!!
 			String dmc = td.getDmc();
 			if (dmc.equals("")) {
 				// No message as some might be naturally blank
@@ -118,7 +117,7 @@ public class ProjectsAddPage extends Activity {
 				// refuse to accept it
 				Toast.makeText(this,
 						getResources().getString(R.string.failure_add_project_exist_p1)
-						+ " " + projectTitle + " " + 
+						+ " " + projectTitle + " "
 						+ getResources().getString(R.string.failure_add_project_exist_p2),
 						Toast.LENGTH_SHORT).show();
 				return true;
@@ -134,6 +133,12 @@ public class ProjectsAddPage extends Activity {
 				projectDao.insert(new ProjectDatabaseItem(newProject.getTitle(),
 							newProject.isWishlist()));
 				Log.i(APP_TAG, "Saved project: " + newProject.toString() + " to database");
+				for (String threadDmc : newProject.getThreadsAmountNeeded().keySet()) {
+					double amount = newProject.getThreadsAmountNeeded().get(threadDmc);
+					projectThreadDao.insert(
+							new ProjectThreadDatabaseItem(newProject.getTitle(), threadDmc, amount));
+					Log.i(APP_TAG, "Saved project thread: " + newProject.getTitle() + " " + threadDmc + " to database");
+				}
                 return null;
             }
         }.execute();

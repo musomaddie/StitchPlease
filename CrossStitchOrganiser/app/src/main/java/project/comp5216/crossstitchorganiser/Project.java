@@ -11,7 +11,7 @@ public class Project {
 
     private String name; // stores the name of the project
     // TODO: store the image associated with the project here
-    private Map<Thread, Double> threadsAmountNeeded;
+    private Map<String, Double> threadsAmountNeeded;
     // stores the thread needed mapped to how much is needed for this particular project.
     private boolean isWishlist; // true if on wishlist, false if not (owned)
     // TODO: not sure if isWishlist is needed in final product -> could just store
@@ -20,12 +20,12 @@ public class Project {
     //TODO: not sure which constructor is more appropriate so currently have both
     public Project(String name, boolean isWishlist) {
         this.name = name;
-        this.threadsAmountNeeded = new HashMap<Thread, Double>();
+        this.threadsAmountNeeded = new HashMap<String, Double>();
         this.isWishlist = isWishlist;
         Log.i(APP_TAG, "Created new project: " + this.toString());
     }
 
-    public Project(String name, Map<Thread, Double> threads, boolean w) {
+    public Project(String name, Map<String, Double> threads, boolean w) {
         this.name = name;
         this.threadsAmountNeeded = threads;
         this.isWishlist = w;
@@ -36,22 +36,22 @@ public class Project {
         return this.name;
     }
 
-    public void addThreadAmount(Thread thread, double a) {
+    public void addThreadAmount(String thread, double a) {
         this.threadsAmountNeeded.put(thread, a);
-    }
+    k
 
     public void buy() {
         this.isWishlist = false;
     }
 
-    public Map<Thread, Double> getThreadsAmountNeeded() {
+    public Map<String, Double> getThreadsAmountNeeded() {
         return this.threadsAmountNeeded;
     }
 
     // use this when only interested in which threads, not how much.
-    public Thread [] getThreadsNeeded() {
+    public String [] getThreadsNeeded() {
         return this.threadsAmountNeeded.keySet().toArray(
-                new Thread[this.threadsAmountNeeded.size()]);
+                new String[this.threadsAmountNeeded.size()]);
     }
 
 	public boolean isWishlist() {

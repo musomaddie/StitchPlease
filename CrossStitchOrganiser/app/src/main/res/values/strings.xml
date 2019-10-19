@@ -7,6 +7,8 @@
 
 	<string name="placeholder">PLACEHOLDER: should not be seen</string>
 	<string name="placeholder_project_add_title">Project Title</string>
+	<string name="placeholder_project_add_thread_dmc">DMC?</string>
+	<string name="placeholder_project_add_thread_amount">How much?</string>
 	<string name="placeholder_thread_add_dmc">DMC Number</string>
 	<string name="placeholder_thread_add_amount">How much do you own? (Skeins)</string>
 

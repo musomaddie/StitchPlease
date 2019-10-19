@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/projectsAddOverview"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -16,6 +17,14 @@
 		android:inputType="text"
 		android:hint="@string/placeholder_project_add_title"
 		/>
+
+	<LinearLayout
+		android:id="@+id/projectsAddThreadDets"
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="match_parent"
+		/>
+
 	<Button
 		android:id="@+id/projectsAddSubmit"
 		android:layout_width="fill_parent"

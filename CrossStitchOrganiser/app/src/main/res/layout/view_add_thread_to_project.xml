@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal"
+	android:id="@+id/llProjectsAddThreadDets"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<EditText
+		android:id="@+id/projectsAddThreadDmc"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:inputType="text"
+		android:hint="@string/placeholder_project_add_thread_dmc"
+		/>
+	<EditText
+		android:id="@+id/projectsAddThreadAmount"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:inputType="numberDecimal"
+		android:hint="@string/placeholder_project_add_thread_amount"
+		/>
+
+
+</LinearLayout>

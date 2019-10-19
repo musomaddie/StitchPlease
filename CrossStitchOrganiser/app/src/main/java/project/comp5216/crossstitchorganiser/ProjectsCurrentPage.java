@@ -67,7 +67,7 @@ public class ProjectsCurrentPage extends Activity {
         Map<Thread, Double> t = new HashMap<Thread, Double>();
         t.put(new Thread("310", Colour.BLACK, 1.1), 1.0);
         t.put(new Thread("550", Colour.BLUE, 1.2), 0.2);
-        currentProjects.add(new Project("PROJECT 2", t, false));
+        //currentProjects.add(new Project("PROJECT 2", t, false));
     }
 
 }

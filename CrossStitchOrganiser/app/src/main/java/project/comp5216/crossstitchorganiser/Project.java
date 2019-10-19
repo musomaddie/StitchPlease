@@ -38,7 +38,7 @@ public class Project {
 
     public void addThreadAmount(String thread, double a) {
         this.threadsAmountNeeded.put(thread, a);
-    k
+    }
 
     public void buy() {
         this.isWishlist = false;

@@ -31,18 +31,16 @@ public class ProjectsAddPage extends Activity {
         setContentView(R.layout.activity_projects_add);
         Log.v(APP_TAG, "Loading Projects Add Page");
 
-
         // Loading the dynamic thread amount adding!
         LinearLayout ll = (LinearLayout) findViewById(R.id.projectsAddThreadDets);
         threadDetails = new ArrayList<ThreadDetails>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 10; i++) {
 			View view = LayoutInflater.from(this).inflate(R.layout.view_add_thread_to_project, null);
 			EditText dmcET = view.findViewById(R.id.projectsAddThreadDmc);
 			EditText amountET = view.findViewById(R.id.projectsAddThreadAmount);
 			threadDetails.add(new ThreadDetails(dmcET, amountET));
 			ll.addView(view);
 		}
-
 
 		// Loading the database
 		db = OrganiserDatabase.getDatabase(this.getApplication().getApplicationContext());
@@ -72,6 +70,21 @@ public class ProjectsAddPage extends Activity {
 		}
 
 		saveProjectToDatabase();
+	}
+
+	public void onProjectsAddMoreThreadsClick(View view) {
+		// TODO: fix issue with adding more threads moves the submit buttons
+		// (etc). off screen
+		Log.v(APP_TAG, "Clicked add more threads");
+        LinearLayout ll = (LinearLayout) findViewById(R.id.projectsAddThreadDets);
+        for (int i = 0; i < 5; i++) {
+			View viewLL = LayoutInflater.from(this).inflate(R.layout.view_add_thread_to_project, null);
+			EditText dmcET = view.findViewById(R.id.projectsAddThreadDmc);
+			EditText amountEk = view.findViewById(R.id.projectsAddThreadAmount);
+			threadDetails.add(new ThreadDetails(dmcET, amountET));
+			ll.addView(viewLL);
+		}
+
 	}
 
     public void onProjectsAddBackClick(View view) {

@@ -17,13 +17,18 @@
 		android:inputType="text"
 		android:hint="@string/placeholder_project_add_title"
 		/>
-
-	<LinearLayout
-		android:id="@+id/projectsAddThreadDets"
-		android:orientation="vertical"
+	
+	<ScrollView
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		/>
+		>
+		<LinearLayout
+			android:id="@+id/projectsAddThreadDets"
+			android:orientation="vertical"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			/>
+	</ScrollView>
 
 	<Button
 		android:id="@+id/projectsAddMoreThreads"

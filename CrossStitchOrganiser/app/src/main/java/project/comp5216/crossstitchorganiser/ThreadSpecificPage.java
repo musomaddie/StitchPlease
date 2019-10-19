@@ -80,8 +80,7 @@ public class ThreadSpecificPage extends Activity {
 							allThreads.add(new Thread(
 										item.getDmc(), 
 										Colour.findColour(item.getColour()), 
-										item.getAmountOwned(),
-										item.getAmountNeeded()));
+										item.getAmountOwned()));
 							Log.i(APP_TAG, "Read item from database: " + item.getDmc());
                         }
                     }

@@ -154,8 +154,7 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
             protected Void doInBackground(Void... voids) {
 				threadDao.insert(new ThreadDatabaseItem(newThread.getDmc(),
 							newThread.getColour().toString(),
-							newThread.getAmountOwned(),
-							newThread.getAmountNeeded()));
+							newThread.getAmountOwned()));
 				Log.i(APP_TAG, "Saved thread: " + newThread.toString() + " to database");
                 return null;
             }

@@ -19,17 +19,12 @@ public class ThreadDatabaseItem {
     @ColumnInfo(name = "amountOwned")
 	private double amountOwned;
 
-	@ColumnInfo(name = "amountNeeded")
-	private double amountNeeded;
-
 	public ThreadDatabaseItem(String dmc,
 			String colour,
-			double amountOwned,
-			double amountNeeded) {
+			double amountOwned) {
 		this.dmc = dmc;
 		this.colour = colour;
 		this.amountOwned = amountOwned;
-		this.amountNeeded = amountNeeded;
 	}
 
 	public String getDmc() {
@@ -42,9 +37,5 @@ public class ThreadDatabaseItem {
 
 	public double getAmountOwned() {
 		return this.amountOwned;
-	}
-
-	public double getAmountNeeded() {
-		return this.amountNeeded;
 	}
 }

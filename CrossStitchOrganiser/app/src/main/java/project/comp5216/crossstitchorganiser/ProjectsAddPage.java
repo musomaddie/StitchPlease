@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ public class ProjectsAddPage extends Activity {
 	private String projectTitle;
 	private Project newProject;
 	private List<ThreadDetails> threadDetails;
+	private boolean isWishlist;
 
     private ProjectDao projectDao;
 	private OrganiserDatabase db;
@@ -51,14 +53,14 @@ public class ProjectsAddPage extends Activity {
 	public void onProjectsAddSubmitClick(View view) {
 		EditText titleET = findViewById(R.id.projectsAddTitleChange);
 		projectTitle = titleET.getText().toString();
+		// TODO: need to check it doesn't already exist!
 		if (projectTitle.equals("")) {
 			Toast.makeText(this,
 					// TODO: update this error message to project
 					getResources().getString(R.string.failure_add_thread_no_dmc),
 					Toast.LENGTH_SHORT).show();
 		}
-		// TODO: need to check it doesn't already exist!
-		newProject = new Project(projectTitle, false);
+		newProject = new Project(projectTitle, isWishlist);
 
 		// TODO: save the threads and amount in the DB. for now just add them
 		// (successfully) to the project
@@ -68,6 +70,7 @@ public class ProjectsAddPage extends Activity {
 			// TODO: sanity check this. (What about invalid inputs?)
 			newProject.addThreadAmount(td.getDmc(), td.getAmount());
 		}
+		
 
 		saveProjectToDatabase();
 	}
@@ -80,11 +83,16 @@ public class ProjectsAddPage extends Activity {
         for (int i = 0; i < 5; i++) {
 			View viewLL = LayoutInflater.from(this).inflate(R.layout.view_add_thread_to_project, null);
 			EditText dmcET = view.findViewById(R.id.projectsAddThreadDmc);
-			EditText amountEk = view.findViewById(R.id.projectsAddThreadAmount);
+			EditText amountET = view.findViewById(R.id.projectsAddThreadAmount);
 			threadDetails.add(new ThreadDetails(dmcET, amountET));
 			ll.addView(viewLL);
 		}
 
+	}
+
+	public void onProjectsAddCheckboxClick(View view) {
+		boolean checked = ((CheckBox) view).isChecked();
+		isWishlist = checked;
 	}
 
     public void onProjectsAddBackClick(View view) {
@@ -122,7 +130,13 @@ class ThreadDetails {
 	}
 
 	public double getAmount() {
-		return Double.parseDouble(this.amountET.getText().toString());
+		try {
+			return Double.parseDouble(this.amountET.getText().toString());
+		} catch (NumberFormatException e) {
+			// do shit
+			Log.d("AHHHHHHHHHHHHHHHHHH", "OOPS");
+			return 1.0;
+		}
 	}
 
 	public String toString() {

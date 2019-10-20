@@ -12,6 +12,9 @@ public interface ProjectThreadDao {
 	@Query("SELECT * FROM projectsToThreads")
 	List<ProjectThreadDatabaseItem> listAll();
 
+	@Query("SELECT * FROM projectsToThreads WHERE projectName = :projectName")
+	List<ProjectThreadDatabaseItem> findThreads(String projectName);
+
 	@Insert
 	void insert(ProjectThreadDatabaseItem item);
 

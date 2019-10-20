@@ -66,6 +66,12 @@ public class ProjectSpecificPage  extends Activity {
                     }
                     Log.i(APP_TAG, "Read item from database: " + projectFromDB.getTitle());
                     // Load all thread details with it
+                    List<ProjectThreadDatabaseItem> threadsFromDB = projectThreadDao.findThreads(thisProjectTitle);
+                    if (thisProject != null && threadsFromDB != null && threadsFromDB.size() > 0) {
+                    	for (ProjectThreadDatabaseItem item: threadsFromDB) {
+                    		thisProject.addThreadAmount(item.getThreadDmc(), item.getAmountNeeded());
+						}
+					}
                     return null;
                 }
             }.execute().get();

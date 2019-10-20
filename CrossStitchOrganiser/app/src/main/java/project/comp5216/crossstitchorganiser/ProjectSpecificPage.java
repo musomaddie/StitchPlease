@@ -8,11 +8,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ProjectSpecificPage  extends Activity {
@@ -21,9 +26,14 @@ public class ProjectSpecificPage  extends Activity {
 	
 	private String thisProjectTitle;
     private Project thisProject;
+    ArrayAdapter<ProjectThread> threadAdapter;
+    private ListView listView;
+    private List<ProjectThread> threadsToView;
+
 	private OrganiserDatabase db;
     private ProjectDao projectDao;
     private ProjectThreadDao projectThreadDao;
+    private ThreadDao threadDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +45,7 @@ public class ProjectSpecificPage  extends Activity {
 		db = OrganiserDatabase.getDatabase(this.getApplication().getApplicationContext());
 		projectDao = db.projectDao();
 		projectThreadDao = db.projectThreadDao();
+		threadDao = db.threadDao();
 
 		// Loading the project details from db
 		loadDetailsFromDatabase();
@@ -60,8 +71,13 @@ public class ProjectSpecificPage  extends Activity {
 			buyButton.setVisibility(View.VISIBLE);
 		}
 
-		// TODO: once loaded threads I need to sort them as well.
-		// Numerically with non numbers at the front
+		// Loading the threads
+		listView = findViewById(R.id.specificProjectThreadList);
+        loadThreads();
+		threadAdapter = new ProjectThreadAdapter(this, threadsToView);
+		listView.setAdapter(threadAdapter);
+		// TODO: sort them
+		// TODO: handle clicks on items that don't have a thread buddy
     }
 
     public  void onShoppingListNavClick(View view) {
@@ -82,6 +98,13 @@ public class ProjectSpecificPage  extends Activity {
     	// TODO: the work of moving this project to purchased. (should be
     	// straightfoward)
     }
+
+    private void loadThreads() {
+    	threadsToView = new ArrayList<ProjectThread>();
+    	for (String key : thisProject.getThreadsAmountNeeded().keySet()) {
+			threadsToView.add(new ProjectThread(key, thisProject.getThreadsAmountNeeded().get(key)));
+		}
+	}
 
 	private void loadDetailsFromDatabase() {
         try {
@@ -111,3 +134,36 @@ public class ProjectSpecificPage  extends Activity {
         }
     }
 }
+
+/*
+private class ThreadsComparator<Thread> implements Comparator {
+
+	static boolean isInt(String value) {
+		try {
+			Integer.parseInt(value);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	int compare(Thread t1, Thread t2) {
+		// if only one of them is a number then it's last
+		boolean t1_num = isInt(t1.getDmc());
+		boolean t2_num = isInt(t2.getDmc());
+
+		if (t1_num && !t2_num) {
+			return 1;
+		}
+		else if (!t1_num && t2_num) {
+			return -1;
+		}
+		else if (t1_num && t2_num) {
+			return Integer.parseInt(t1.getDmc()).compareTo(Integer.parseInt(t2.getDmc()));
+		}
+		else {
+			return t1.getDmc().compareTo(t2.getDmc());
+		}
+	}
+}
+*/

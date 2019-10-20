@@ -10,7 +10,6 @@
 		android:text="@string/placeholder"
 		/>
 
-	<!-- TODO: not sure if I need the app thing -->
 	<ImageView
 		android:id="@+id/specificProjectImage"
 		android:layout_width="100dp"
@@ -26,8 +25,13 @@
 		android:visibility="gone"
 		/>
 
+	<ListView
+		android:id="@+id/specificProjectThreadList"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_weight="1" />
 
-    <Button
+	<Button
         android:id="@+id/projectShoppingList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

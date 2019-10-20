@@ -15,7 +15,16 @@
 		android:id="@+id/specificProjectImage"
 		android:layout_width="100dp"
 		android:layout_height="100dp"
-	/>
+		/>
+
+	<Button
+		android:id="@+id/specificProjectBuy"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/projects_buy"
+		android:onClick="onProjectBuyClick"
+		android:visibility="gone"
+		/>
 
 
     <Button

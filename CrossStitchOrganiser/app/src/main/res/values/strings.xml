@@ -18,6 +18,7 @@
 
 	<string name="projects_add_choose_image">Choose Image</string>
 	<string name="projects_add_title">Add a New Project</string>
+	<string name="projects_buy">Buy Project!</string>
     <string name="projects_current_title">Current Projects</string>
 	<string name="projects_title">Projects</string>
 	<string name="projects_add_more_threads">Add more threads to project </string>

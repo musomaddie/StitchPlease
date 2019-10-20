@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +54,12 @@ public class ProjectSpecificPage  extends Activity {
 			}
 		}
 
+		// Viewing the buy button (only if wishlist)
+		Button buyButton = findViewById(R.id.specificProjectBuy);
+		if (thisProject.isWishlist()) {
+			buyButton.setVisibility(View.VISIBLE);
+		}
+
 		// TODO: once loaded threads I need to sort them as well.
 		// Numerically with non numbers at the front
     }
@@ -68,6 +75,12 @@ public class ProjectSpecificPage  extends Activity {
     public void onSpecificProjectBackClick(View view) {
         Log.v(APP_TAG, "clicked back from thread specific page");
         finish();
+    }
+
+    public void onProjectBuyClick(View view) {
+    	Log.v(APP_TAG, "clicked buy project!");
+    	// TODO: the work of moving this project to purchased. (should be
+    	// straightfoward)
     }
 
 	private void loadDetailsFromDatabase() {

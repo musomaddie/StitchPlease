@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+		android:id="@+id/listItemProjectImage"
+        android:layout_width="176dp"
+        android:layout_height="180dp"
+        app:srcCompat="@mipmap/ic_launcher" />
+
     <TextView
-        android:id="@+id/listItemProject"
+		android:id="@+id/listItemProjectTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder"
-        />
-
-
+        android:text="Project Name" />
 </LinearLayout>

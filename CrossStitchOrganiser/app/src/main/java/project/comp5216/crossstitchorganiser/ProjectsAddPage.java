@@ -1,8 +1,18 @@
 package project.comp5216.crossstitchorganiser;
 
+import android.Manifest;
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.AsyncTask;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +23,22 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.widget.Button;
+import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class ProjectsAddPage extends Activity {
 
@@ -28,6 +54,12 @@ public class ProjectsAddPage extends Activity {
     private ProjectDao projectDao;
     private ProjectThreadDao projectThreadDao;
 
+    Button buttonChooseImage, takePicture;
+    ImageView imageView;
+    String pathToFile;
+
+    final int REQUEST_CODE_GALLERY =999;
+    final int REQUEST_CODE_TAKEPICTURE = 888;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +70,7 @@ public class ProjectsAddPage extends Activity {
         // Loading the dynamic thread amount adding!
         LinearLayout ll = (LinearLayout) findViewById(R.id.projectsAddThreadDets);
         threadDetails = new ArrayList<ThreadDetails>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) {
 			View view = LayoutInflater.from(this).inflate(R.layout.view_add_thread_to_project, null);
 			EditText dmcET = view.findViewById(R.id.projectsAddThreadDmc);
 			EditText amountET = view.findViewById(R.id.projectsAddThreadAmount);
@@ -51,6 +83,30 @@ public class ProjectsAddPage extends Activity {
 		projectDao = db.projectDao();
 		projectThreadDao = db.projectThreadDao();
 
+        init(); //calling button constructor
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+        }
+
+		// This just makes a request 
+        buttonChooseImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityCompat.requestPermissions(ProjectsAddPage.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        REQUEST_CODE_GALLERY
+                );
+
+            }
+        });
+
+        takePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchPictureTakeAction();
+            }
+        });
     }
 
 	public void onProjectsAddSubmitClick(View view) {
@@ -65,7 +121,8 @@ public class ProjectsAddPage extends Activity {
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		newProject = new Project(projectTitle, isWishlist);
+		// TODO: sensible handling of no image added! (esp for display)
+		newProject = new Project(projectTitle, isWishlist, pathToFile);
 
 
 		// Going through the thread info now
@@ -81,7 +138,7 @@ public class ProjectsAddPage extends Activity {
 		saveProjectToDatabase();
 
 		Toast.makeText(this,
-				getResources().getString(R.string.success_project_add),
+				getResources().getString(R.string.success_project_add) + newProject.getTitle(),
 				Toast.LENGTH_SHORT).show();
 	}
 
@@ -131,7 +188,7 @@ public class ProjectsAddPage extends Activity {
             @Override
             protected Void doInBackground(Void... voids) {
 				projectDao.insert(new ProjectDatabaseItem(newProject.getTitle(),
-							newProject.isWishlist()));
+							newProject.isWishlist(), pathToFile));
 				Log.i(APP_TAG, "Saved project: " + newProject.toString() + " to database");
 				for (String threadDmc : newProject.getThreadsAmountNeeded().keySet()) {
 					double amount = newProject.getThreadsAmountNeeded().get(threadDmc);
@@ -166,6 +223,100 @@ public class ProjectsAddPage extends Activity {
 			Log.e(APP_TAG, ex.getStackTrace().toString());
         }
 	}
+
+    private void dispatchPictureTakeAction() {
+        Intent takePic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePic.resolveActivity(getPackageManager()) != null) {
+            File photoFile = createPhotoFile();
+
+            if (photoFile != null) {
+                pathToFile = photoFile.getAbsolutePath();
+                Uri photoUri = FileProvider.getUriForFile(ProjectsAddPage.this, "project.comp5216.crossstitchorganiser", photoFile);
+                takePic.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(takePic, 888);
+            }
+        }
+    }
+
+    private File createPhotoFile() {
+        String name = new SimpleDateFormat("MMdd_mmss").format(new Date());
+        File storageDir = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File image = null;
+        try {
+            image = File.createTempFile(name, ".jpg", storageDir);
+        } catch (IOException e) {
+        	e.printStackTrace();
+        }
+        return image;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == REQUEST_CODE_GALLERY){
+            if(grantResults.length>0 && grantResults[0]== PackageManager.PERMISSION_GRANTED){
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, REQUEST_CODE_GALLERY);
+            }
+            else {
+                Toast.makeText(getApplicationContext(),"you dont have permission to access file location",Toast.LENGTH_LONG);
+            }
+            return;
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == REQUEST_CODE_TAKEPICTURE){
+
+            Bitmap bitmap = BitmapFactory.decodeFile(pathToFile);
+            imageView.setImageBitmap(bitmap);
+
+        }
+
+        else if(requestCode == REQUEST_CODE_GALLERY && resultCode ==RESULT_OK && data != null){
+            Uri uri =data.getData();
+
+            try {
+            	pathToFile = new File(getRealPathFromUri(uri)).getAbsolutePath();
+                InputStream inputStream = getContentResolver().openInputStream(uri);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                imageView.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    // private method to help
+    // TODO: source this: taken from stack overflow https://stackoverflow.com/questions/2789276/android-get-real-path-by-uri-getpath/9989900
+    private String getRealPathFromUri(Uri contentUri) {
+		String result;
+		Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
+		if (cursor == null) {
+			result = contentUri.getPath();
+		} else {
+			cursor.moveToFirst();
+			int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+			result = cursor.getString(idx);
+			cursor.close();
+		}
+		return result;
+	}
+
+
+
+    private void init(){
+        buttonChooseImage = (Button) findViewById(R.id.button_addImage);
+        imageView= (ImageView) findViewById(R.id.addProject_imageView);
+        takePicture = (Button) findViewById(R.id.button_camera);
+    }
 }
 
 class ThreadDetails {
@@ -190,9 +341,5 @@ class ThreadDetails {
 			// TODO: mention somewhere this happens!
 			return 1.0;
 		}
-	}
-
-	public String toString() {
-		return this.dmcET.getText().toString();
 	}
 }

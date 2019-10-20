@@ -16,7 +16,8 @@
 	<string name="placeholder_thread_add_dmc">DMC Number</string>
 	<string name="placeholder_thread_add_amount">How much do you own? (Skeins)</string>
 
-    <string name="projects_add_title">Add a New Project</string>
+	<string name="projects_add_choose_image">Choose Image</string>
+	<string name="projects_add_title">Add a New Project</string>
     <string name="projects_current_title">Current Projects</string>
 	<string name="projects_title">Projects</string>
 	<string name="projects_add_more_threads">Add more threads to project </string>

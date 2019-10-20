@@ -2,6 +2,7 @@ package project.comp5216.crossstitchorganiser;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,8 +20,8 @@ public class ProjectsCurrentPage extends Activity {
     private static final String APP_TAG = "Cross Stitch Organiser";
 
     private ListView listView;
-    private List<Project> currentProjects;
-    private ArrayAdapter<Project> projectAdapter;
+    private ArrayList<Project> currentProjects;
+    private ProjectAdapter projectAdapter =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +29,10 @@ public class ProjectsCurrentPage extends Activity {
         setContentView(R.layout.activity_projects_current);
         Log.v(APP_TAG, "Loading projects current page");
 
-        // Gonna create project list now
         listView = (ListView) findViewById(R.id.projectsCurrentList);
-        setUpProjectData();
+        currentProjects = new ArrayList<>();
         projectAdapter = new ProjectAdapter(this, currentProjects);
+
         listView.setAdapter(projectAdapter);
 
         setUpProjectItemListener();

@@ -32,8 +32,8 @@ public class ProjectsWishlistPage extends Activity {
         // Gonna create project list now
         listView = findViewById(R.id.projectsWishlistList);
         setUpProjectData();
-        projectAdapter = new ProjectAdapter(this, wishlistProjects);
-        listView.setAdapter(projectAdapter);
+        //projectAdapter = new ProjectAdapter(this, wishlistProjects, "AHH");
+        //listView.setAdapter(projectAdapter);
 
         setUpProjectItemListener();
     }

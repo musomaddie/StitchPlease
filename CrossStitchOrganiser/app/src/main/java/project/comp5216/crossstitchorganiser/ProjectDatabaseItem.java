@@ -16,9 +16,13 @@ public class ProjectDatabaseItem {
 	@ColumnInfo(name="isWishlist")
 	private boolean isWishlist;
 
-	public ProjectDatabaseItem(String title, boolean isWishlist) {
+	@ColumnInfo(name="picturePath")
+	private String picturePath;
+
+	public ProjectDatabaseItem(String title, boolean isWishlist, String picturePath) {
 		this.title = title;
 		this.isWishlist = isWishlist;
+		this.picturePath = picturePath;
 	}
 
 	public String getTitle() {
@@ -27,5 +31,9 @@ public class ProjectDatabaseItem {
 
 	public boolean isWishlist() {
 		return this.isWishlist;
+	}
+
+	public String getPicturePath() {
+		return this.picturePath;
 	}
 }

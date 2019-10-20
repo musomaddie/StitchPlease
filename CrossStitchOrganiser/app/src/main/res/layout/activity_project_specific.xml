@@ -18,7 +18,6 @@
         android:onClick="onShoppingListNavClick"
         />
 
-
     <Button
         android:id="@+id/specificProjectBack"
         android:layout_width="fill_parent"

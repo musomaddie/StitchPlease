@@ -11,6 +11,9 @@ public interface ProjectDao {
 
 	@Query("SELECT * FROM projects")
 	List<ProjectDatabaseItem> listAll();
+
+	@Query("SELECT * FROM projects WHERE title = :title")
+	ProjectDatabaseItem loadProject(String title);
 	
 	@Insert
 	void insert(ProjectDatabaseItem project);

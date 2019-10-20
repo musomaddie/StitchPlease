@@ -37,6 +37,11 @@ public class ProjectAdapter extends ArrayAdapter {
 		projectTitle.setText(project.getTitle());
 
 		// Set image
+		// If no image to load: quit early
+		if (project.getPathToImage() == null) {
+			return convertView;
+		}
+
 		// TODO: source from stack overflow https://stackoverflow.com/questions/4181774/show-image-view-from-file-path
 		File imageFile = new File(project.getPathToImage());
 		if (imageFile.exists()) {

@@ -5,7 +5,9 @@ package project.comp5216.crossstitchorganiser;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Thread {
 
@@ -17,11 +19,12 @@ public class Thread {
     private int[] rgb; // The RGB colour (calculated by us for display)
     private double amountOwned; // the amount of thread the user owns
     private double amountNeeded; // the amount of thread the user needs for all projects -> calculated by us based on projects reqs.
-    private List<Project> projects; // the projects this thread is used in
+    private Map<String, Double> projects;
 
 	public Thread(String dmc, Colour colour, double amountOwned, double amountNeeded) {
 		this(dmc, colour, amountOwned);
 		this.amountNeeded = amountNeeded;
+        this.projects = new HashMap<String, Double>();
 	}
 
     public Thread(String dmc, Colour colour, double amountOwned) {
@@ -30,7 +33,7 @@ public class Thread {
         this.rgb = new int[3];
         this.amountOwned = amountOwned;
         this.amountNeeded = 0;
-        this.projects = new ArrayList<Project>();
+        this.projects = new HashMap<String, Double>();
         Log.i(APP_TAG, "Created new thread: " + this.toString());
     }
 
@@ -50,16 +53,12 @@ public class Thread {
         return this.amountOwned;
     }
 
-    public double getAmountNeeded() {
-        return this.amountNeeded;
-    }
-
-    public List<Project> getProjects() {
+    public Map<String, Double> getProjects() {
         return this.projects;
     }
 
-    public void addProject(Project project) {
-        this.projects.add(project);
+    public void addProject(String project, double amountNeeded) {
+    	this.projects.put(project, Double.valueOf(amountNeeded));
     }
 
     public String toString() {

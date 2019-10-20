@@ -11,9 +11,11 @@ public interface ThreadDao {
 	@Query("SELECT * FROM threads")
     List<ThreadDatabaseItem> listAll();
 
+    @Query("SELECT * FROM threads WHERE dmc = :dmc")
+    ThreadDatabaseItem findThread(String dmc);
+
 	@Query("UPDATE threads SET amountOwned=:amountOwned WHERE dmc = :dmc")
 	void updateAmountOwned(double amountOwned, String dmc);
-
 
     @Insert
     void insert(ThreadDatabaseItem thread);

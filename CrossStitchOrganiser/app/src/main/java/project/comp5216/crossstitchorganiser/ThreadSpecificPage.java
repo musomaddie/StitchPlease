@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,11 +16,15 @@ public class ThreadSpecificPage extends Activity {
 
     private static final String APP_TAG = "Cross Stitch Organiser";
 
-	private List<Thread> allThreads;
     private Thread thisThread;
+	private String thisDmc;
+    private ListView listView;
+	private List<ThreadProject> projectsToView;
+    ArrayAdapter<ThreadProject> projectAdapter;
 
-    private ThreadDao threadDao;
 	private OrganiserDatabase db;
+    private ThreadDao threadDao;
+    private ProjectThreadDao projectThreadDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +33,13 @@ public class ThreadSpecificPage extends Activity {
 		// Loading the database
 		db = OrganiserDatabase.getDatabase(this.getApplication().getApplicationContext());
 		threadDao = db.threadDao();
+		projectThreadDao = db.projectThreadDao();
+			
 		
 		// Loading the details for the thread
-        String thisDmc = getIntent().getStringExtra("dmc");
-		findThread(thisDmc);
+        thisDmc = getIntent().getStringExtra("dmc");
+		loadThread();
+
 		// The title
         TextView title = findViewById(R.id.specificThreadTitle);
         title.setText(thisThread.toString());
@@ -43,13 +52,13 @@ public class ThreadSpecificPage extends Activity {
 		TextView amountOwnedV = findViewById(R.id.specificThreadAmountOwned);
 		amountOwnedV.setText(Double.valueOf(thisThread.getAmountOwned()).toString());
 
-		// The amount needed
-		TextView amountNeededV = findViewById(R.id.specificThreadAmountNeeded);
-		amountNeededV.setText(Double.valueOf(thisThread.getAmountNeeded()).toString());
+		// All the projects
+		listView = findViewById(R.id.specificThreadProjectList);
+		loadProjects();
+		projectAdapter = new ThreadProjectAdapter(this, projectsToView);
+		listView.setAdapter(projectAdapter);
 
-        // TODO: will need a list view to view all projects used in
-
-		Log.v(APP_TAG, "Loading Colour specific page for: " + thisThread.getDmc());
+		Log.v(APP_TAG, "Loading Thread specific page for: " + thisThread.getDmc());
     }
 
     public void onSpecificThreadBackClick(View view) {
@@ -57,33 +66,30 @@ public class ThreadSpecificPage extends Activity {
         finish();
     }
 
-	private void findThread(String thisDmc) {
-		loadAllFromDatabase();
-		for (Thread thread : allThreads) {
-			if (thread.getDmc().equals(thisDmc)) {
-				thisThread = thread;
-				return;
-			}
+    private void loadProjects() {
+    	projectsToView = new ArrayList<ThreadProject>();
+		for (String projectTitle : thisThread.getProjects().keySet()) {
+			projectsToView.add(new ThreadProject(projectTitle, thisThread.getProjects().get(projectTitle)));
 		}
 	}
 
-	private void loadAllFromDatabase() {
-		// TODO: will also need to load the list of linked projects!!
+	private void loadThread() {
         try {
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
-					List<ThreadDatabaseItem> itemsFromDB = threadDao.listAll();
-					allThreads = new ArrayList<Thread>();
-                    if (itemsFromDB != null && itemsFromDB.size() > 0) {
-						for (ThreadDatabaseItem item: itemsFromDB) {
-							allThreads.add(new Thread(
-										item.getDmc(), 
-										Colour.findColour(item.getColour()), 
-										item.getAmountOwned()));
-							Log.i(APP_TAG, "Read item from database: " + item.getDmc());
-                        }
-                    }
+                	ThreadDatabaseItem threadFromDB = threadDao.findThread(thisDmc);
+                	if (threadFromDB != null) {
+                		thisThread = new Thread(threadFromDB.getDmc(),
+                				Colour.findColour(threadFromDB.getColour()),
+                				threadFromDB.getAmountOwned());
+					}
+					List<ProjectThreadDatabaseItem> projects = projectThreadDao.findProjects(thisDmc);
+					if (threadFromDB != null && projects != null && projects.size() > 0) {
+						for (ProjectThreadDatabaseItem project : projects) {
+							thisThread.addProject(project.getProjectName(), project.getAmountNeeded());
+						}
+					}
                     return null;
                 }
             }.execute().get();

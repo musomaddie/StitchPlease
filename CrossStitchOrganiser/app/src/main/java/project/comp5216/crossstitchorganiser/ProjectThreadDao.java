@@ -15,6 +15,9 @@ public interface ProjectThreadDao {
 	@Query("SELECT * FROM projectsToThreads WHERE projectName = :projectName")
 	List<ProjectThreadDatabaseItem> findThreads(String projectName);
 
+	@Query("SELECT * FROM projectsToThreads WHERE threadDmc = :dmc")
+	List<ProjectThreadDatabaseItem> findProjects(String dmc);
+
 	@Insert
 	void insert(ProjectThreadDatabaseItem item);
 

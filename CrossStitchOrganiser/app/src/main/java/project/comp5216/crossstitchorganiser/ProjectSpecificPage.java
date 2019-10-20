@@ -2,12 +2,16 @@ package project.comp5216.crossstitchorganiser;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
 
 public class ProjectSpecificPage  extends Activity {
@@ -37,6 +41,20 @@ public class ProjectSpecificPage  extends Activity {
 		//Setting up title
 		TextView title = findViewById(R.id.specificProjectTitle);
 		title.setText(thisProject.getTitle());
+
+		// Viewing the image
+		ImageView image = findViewById(R.id.specificProjectImage);
+		if (thisProject.getPathToImage() != null) {
+			// TODO: source from stack overflow (again)
+			File imageFile = new File(thisProject.getPathToImage());
+			if (imageFile.exists()) {
+				Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+				image.setImageBitmap(bitmap);
+			}
+		}
+
+		// TODO: once loaded threads I need to sort them as well.
+		// Numerically with non numbers at the front
     }
 
     public  void onShoppingListNavClick(View view) {

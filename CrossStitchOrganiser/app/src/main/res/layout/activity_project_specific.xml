@@ -7,8 +7,16 @@
         android:id="@+id/specificProjectTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder"
-        />
+		android:text="@string/placeholder"
+		/>
+
+	<!-- TODO: not sure if I need the app thing -->
+	<ImageView
+		android:id="@+id/specificProjectImage"
+		android:layout_width="100dp"
+		android:layout_height="100dp"
+	/>
+
 
     <Button
         android:id="@+id/projectShoppingList"

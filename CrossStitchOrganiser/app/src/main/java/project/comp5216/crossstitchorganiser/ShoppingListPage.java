@@ -73,26 +73,17 @@ public class ShoppingListPage extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ShoppingListItem updateItem = (ShoppingListItem) shoppingAdapter.getItem(position);
                 Log.i(APP_TAG, "Clicked item " + position + ": " + updateItem.getThread());
-
-                // TODO: display the updated change
                 updateItem.mark();
             }
         });
     }
 
     private void populateShoppingList(String includedProjects) {
-		// Check if it is equal to ALL projects or not.
 		if (includedProjects.equals("all")) {
-			Log.d(APP_TAG, "CALCULATING SHOPPING LIST FOR ALL PROJECTS!");
-			// TODO: this is all dummy data, populate later
-			items = new ArrayList<ShoppingListItem>();
-			items.add(new ShoppingListItem("310", 2));
-			items.add(new ShoppingListItem("550", 2));
-			return;
+			loadAllProjectNamesFromDB();
+		} else {
+			projects = Arrays.asList(new String[] {includedProjects});
 		}
-		// Otherwise it's a particular project
-		projects = Arrays.asList(new String[] {includedProjects});
-		// have the list of threads needed
         loadDetailsFromDatabase();
 		calculateThreadAmount();
     }
@@ -131,11 +122,6 @@ public class ShoppingListPage extends Activity {
 				items.add(new ShoppingListItem(thisDmc, (int)amountToAdd + 1));
 			}
         }
-		// Find the amount owned
-		// For each thread in threads needed:
-		// How much is needed = 
-		// 		amountOwned - amountNeededForAllProjects
-		// if this is < amountNeeded for THIS project: add to the shopping list
 	}
 
 	private void findProjectsForThreadFromDatabase() {
@@ -181,6 +167,27 @@ public class ShoppingListPage extends Activity {
             Log.e(APP_TAG, ex.getStackTrace().toString());
         }
     }
+
+	private void loadAllProjectNamesFromDB() {
+        try {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+					// Find all the threads associated with each project
+					projects = new ArrayList<String>();
+					List<ProjectDatabaseItem> projectsFromDB = projectDao.listAll();
+					if (projectsFromDB != null) {
+						for (ProjectDatabaseItem item : projectsFromDB) {
+							projects.add(item.getTitle());
+						}
+					}
+                    return null;
+                }
+            }.execute().get();
+        } catch (Exception ex) {
+            Log.e(APP_TAG, ex.getStackTrace().toString());
+        }
+	}
 
 	private void loadDetailsFromDatabase() {
         try {

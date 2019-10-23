@@ -1,42 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical">
 
 	<View
 		android:id="@+id/specificThreadColourRect"
-		android:layout_width="46dp"
-		android:layout_height="46dp"
+		android:layout_width="100dp"
+		android:layout_height="100dp"
 		android:background="#DDDDDD"
 		android:visibility="visible"
-		/>
-
-    <TextView
-        android:id="@+id/specificThreadTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/placeholder"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintLeft_toLeftOf="parent"
+		app:layout_constraintRight_toRightOf="@id/guidelineColourSep"
+		app:layout_constraintBottom_toBottomOf="@id/guidelineTitleSep"
 		/>
 
 	<TextView
-		android:id="@+id/specificThreadAmountOwned"
-		android:layout_width="fill_parent"
+		android:id="@+id/specificThreadTitle"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_marginTop="32dp"
 		android:text="@string/placeholder"
-		/>
+		android:textSize="16sp"
+		android:textStyle="bold"
+		app:layout_constraintLeft_toLeftOf="@id/guidelineColourSep"
+		app:layout_constraintRight_toRightOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<TextView
+		android:id="@+id/specificThreadAmountOwned"
+		android:layout_width="wrap_content"
+		android:textSize="16sp"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="32dp"
+		android:text="@string/placeholder"
+		app:layout_constraintBottom_toBottomOf="@+id/guidelineTitleSep"
+		app:layout_constraintLeft_toLeftOf="@id/guidelineColourSep"
+		app:layout_constraintRight_toRightOf="parent" />
 
 	<ListView
 		android:id="@+id/specificThreadProjectList"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:layout_weight="1" />
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toBottomOf="@id/guidelineTitleSep"
+		app:layout_constraintBottom_toTopOf="@id/specificThreadBack"
+		/>
 
-    <Button
-        android:id="@+id/specificThreadBack"
-        android:layout_width="fill_parent"
+	<Button
+		android:id="@+id/specificThreadBack"
+		android:onClick="onSpecificThreadBackClick"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/back"
-        android:onClick="onSpecificThreadBackClick"
-        />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guidelineTitleSep"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		app:layout_constraintGuide_begin="130dp" />
+
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guidelineColourSep"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		app:layout_constraintGuide_begin="130dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

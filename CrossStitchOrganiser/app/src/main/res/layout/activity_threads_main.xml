@@ -53,9 +53,9 @@
     <Button
         android:id="@+id/threadsBack"
         style="@style/Widget.AppCompat.Button.Colored"
+        android:onClick="onThreadsBackClick"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:onClick="onThreadsBackClick"
         android:text="@string/back"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,6 +1,7 @@
 package project.comp5216.crossstitchorganiser;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Map;
 
 
 // ACKNOWLEDGEMENT: Adapted from tutorial
@@ -40,7 +42,13 @@ public class ThreadAdapter extends ArrayAdapter {
 
 		// Set the colour of the rectangle
 		View squareColour = convertView.findViewById(R.id.colourRectangle);
-		squareColour.setBackground(thread.getColour().findColourResource(getContext()));
+		thread.getDmc();
+		Map<String, String> dmcToHex = new DMC_toHex().hexColours;
+		if (dmcToHex.containsKey(thread.getDmc())) {
+		    squareColour.setBackgroundColor(Color.parseColor(dmcToHex.get(thread.getDmc())));
+        } else {
+            squareColour.setBackground(thread.getColour().findColourResource(getContext()));
+        }
 
 		// populate the amount text
 		TextView amount = convertView.findViewById(R.id.listItemAmount);

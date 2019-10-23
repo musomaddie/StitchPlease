@@ -116,7 +116,7 @@ public class ProjectsAddPage extends Activity {
 			return;
 		}
 		if (projectTitle.equals("")) {
-			Toast.makeText(this,
+			Toast.makeText(getApplicationContext(),
 					getResources().getString(R.string.failure_add_project_no_title),
 					Toast.LENGTH_SHORT).show();
 			return;
@@ -137,7 +137,7 @@ public class ProjectsAddPage extends Activity {
 		}
 		saveProjectToDatabase();
 
-		Toast.makeText(this,
+		Toast.makeText(getApplicationContext(),
 				getResources().getString(R.string.success_project_add) + newProject.getTitle(),
 				Toast.LENGTH_SHORT).show();
 	}
@@ -172,7 +172,7 @@ public class ProjectsAddPage extends Activity {
     	for (Project p : allExistingProjects) {
 			if (p.getTitle().equals(projectTitle)) {
 				// refuse to accept it
-				Toast.makeText(this,
+				Toast.makeText(getApplicationContext(),
 						getResources().getString(R.string.failure_add_project_exist_p1)
 						+ " " + projectTitle + " "
 						+ getResources().getString(R.string.failure_add_project_exist_p2),

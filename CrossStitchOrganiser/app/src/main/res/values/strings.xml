@@ -13,8 +13,8 @@
 	<string name="placeholder_project_add_title">Project Title</string>
 	<string name="placeholder_project_add_thread_dmc">DMC?</string>
 	<string name="placeholder_project_add_thread_amount">How much?</string>
-	<string name="placeholder_thread_add_dmc">DMC Number</string>
-	<string name="placeholder_thread_add_amount">How much do you own? (Skeins)</string>
+	<string name="placeholder_thread_add_dmc">(required)</string>
+	<string name="placeholder_thread_add_amount">(non-required: default is 1)</string>
 
 	<string name="projects_add_choose_image">Choose Image</string>
 	<string name="projects_add_title">Add a New Project</string>
@@ -32,6 +32,9 @@
 	<string name="success_thread_creation">Successfully added thread: </string>
 	<string name="success_thread_updated">Successfully updated thread: </string>
 
+	<string name="threads_add_amount">Skeins owned: </string>
+	<string name="threads_add_colour">Colour: </string>
+	<string name="threads_add_dmc">DMC: </string>
 	<string name="threads_add_title">Add Thread</string>
     <string name="threads_inventory_colour_title">Inventory By Colour</string>
     <string name="threads_inventory_full_title">Full Inventory</string>

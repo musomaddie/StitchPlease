@@ -1,44 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/threadsAddTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/threads_add_title"
-		/>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+
+	<TextView
+		android:id="@+id/threadsAddTxtDmc"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/threads_add_dmc"
+		android:textSize="16sp"
+		app:layout_constraintBottom_toTopOf="@+id/guideline"
+		app:layout_constraintEnd_toStartOf="@+id/guideline4"
+		app:layout_constraintHorizontal_bias="0.506"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
 	<EditText
 		android:id="@+id/threadsAddTextDmc"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:inputType="text"
+		android:layout_width="286dp"
+		android:layout_height="50dp"
 		android:hint="@string/placeholder_thread_add_dmc"
-		/>
+		android:inputType="text"
+		android:textSize="16sp"
+		app:layout_constraintBottom_toTopOf="@+id/guideline"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="@+id/guideline4"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_bias="0.0" />
+
+	<TextView
+		android:id="@+id/threadsAddTxtColour"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/threads_add_colour"
+		android:textSize="16sp"
+		app:layout_constraintBottom_toTopOf="@+id/guideline2"
+		app:layout_constraintEnd_toStartOf="@+id/guideline4"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="@+id/guideline" />
+
 	<Spinner
 		android:id="@+id/threadsAddColourSpinner"
-		android:layout_width="fill_parent"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		/>
+		android:textSize="16sp"
+		app:layout_constraintBottom_toTopOf="@+id/guideline2"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="@+id/guideline4"
+		app:layout_constraintTop_toTopOf="@+id/guideline" />
+
 	<EditText
 		android:id="@+id/threadsAddAmount"
-		android:layout_width="fill_parent"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:inputType="numberDecimal"
 		android:hint="@string/placeholder_thread_add_amount"
-		/>
+		android:inputType="numberDecimal"
+		app:layout_constraintBottom_toTopOf="@+id/guideline3"
+		app:layout_constraintTop_toTopOf="@+id/guideline2"
+		app:layout_constraintStart_toStartOf="@+id/guideline4"
+		app:layout_constraintEnd_toEndOf="parent"
+		tools:layout_editor_absoluteX="142dp" />
+
 	<Button
 		android:id="@+id/threadsAddSubmit"
-		android:layout_width="fill_parent"
+		style="@style/Widget.AppCompat.Button.Colored"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:text="@string/submit"
 		android:onClick="onThreadsAddSubmitClick"
-		/>
-    <Button
-        android:id="@+id/threadsAddBack"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/back"
-        android:onClick="onThreadsAddBackClick"
-        />
-</LinearLayout>
+		android:text="@string/submit"
+		android:textSize="18sp"
+		app:layout_constraintBottom_toTopOf="@id/threadsAddBack"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<Button
+		android:id="@+id/threadsAddBack"
+		style="@style/Widget.AppCompat.Button.Colored"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:onClick="onThreadsAddBackClick"
+		android:text="@string/back"
+		android:textSize="18sp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guideline"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		app:layout_constraintGuide_begin="50dp" />
+
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guideline2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		app:layout_constraintGuide_begin="100dp" />
+
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guideline3"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		app:layout_constraintGuide_begin="150dp" />
+
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guideline4"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		app:layout_constraintGuide_begin="125dp" />
+
+	<TextView
+		android:id="@+id/textView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/threads_add_amount"
+		android:textSize="16sp"
+		app:layout_constraintBottom_toTopOf="@+id/guideline3"
+		app:layout_constraintEnd_toStartOf="@+id/guideline4"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="@+id/guideline2" />
+</androidx.constraintlayout.widget.ConstraintLayout>

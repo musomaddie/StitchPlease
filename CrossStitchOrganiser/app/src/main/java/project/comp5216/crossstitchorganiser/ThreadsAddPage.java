@@ -43,7 +43,7 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 		EditText dmcET = findViewById(R.id.threadsAddTextDmc);
 		dmc = dmcET.getText().toString();
 		if (dmc.equals("")) {
-			Toast.makeText(this,
+			Toast.makeText(getApplicationContext(),
 					getResources().getString(R.string.failure_add_thread_no_dmc),
 					Toast.LENGTH_SHORT).show();
 			return;
@@ -60,7 +60,7 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 			return;
 		}
 		saveThreadToDatabase();
-		Toast.makeText(this,
+		Toast.makeText(getApplicationContext(),
 				getResources().getString(R.string.success_thread_creation) + newThread.toString(),
 				Toast.LENGTH_SHORT).show();
 	}
@@ -95,7 +95,7 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 				newThread = new Thread(
 						dmc, colour, thread.getAmountOwned() + amount);
 				updateDatabase();
-				Toast.makeText(this,
+				Toast.makeText(getApplicationContext(),
 						getResources().getString(R.string.success_thread_updated) 
 						+ newThread.getDmc(), 
 						Toast.LENGTH_SHORT).show();

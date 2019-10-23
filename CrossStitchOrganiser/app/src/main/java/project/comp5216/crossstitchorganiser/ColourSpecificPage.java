@@ -36,8 +36,6 @@ public class ColourSpecificPage extends Activity {
 
         // Find the correct colour and load the appropriate information.
         thisColour = (Colour) getIntent().getSerializableExtra("colour");
-        TextView title = findViewById(R.id.specificColourTitle);
-        title.setText(thisColour.toString());
 
         Log.v(APP_TAG, "Loading Colour specific page for: " + thisColour);
 

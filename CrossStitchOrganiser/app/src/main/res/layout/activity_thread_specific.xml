@@ -29,13 +29,11 @@
 		android:textStyle="bold"
 		app:layout_constraintRight_toRightOf="@id/guidelineInfoSep"
 		app:layout_constraintTop_toTopOf="parent" />
-
 	<TextView
 		android:id="@+id/specificThreadTitle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="32dp"
-		android:layout_marginRight="16dp"
 		android:text="@string/placeholder"
 		android:textSize="16sp"
 		android:textStyle="bold"
@@ -58,11 +56,10 @@
 	<TextView
 		android:id="@+id/specificThreadAmountOwned"
 		android:layout_width="wrap_content"
+		android:textSize="16sp"
 		android:layout_height="wrap_content"
-		android:layout_marginRight="16dp"
 		android:layout_marginBottom="32dp"
 		android:text="@string/placeholder"
-		android:textSize="16sp"
 		app:layout_constraintBottom_toBottomOf="@+id/guidelineTitleSep"
 		app:layout_constraintLeft_toLeftOf="@id/guidelineInfoSep"
 		app:layout_constraintRight_toRightOf="parent" />
@@ -71,13 +68,13 @@
 		android:id="@+id/specificThreadProjectText"
 		android:layout_width="wrap_content"
 		android:layout_height="0dp"
+		android:layout_marginBottom="8dp"
 		android:text="@string/thread_specific_project_msg"
 		android:textSize="16sp"
 		android:textStyle="bold"
 		app:layout_constraintBottom_toTopOf="@id/guidelineListSep"
 		app:layout_constraintLeft_toLeftOf="parent"
-		app:layout_constraintRight_toRightOf="parent"
-		app:layout_constraintTop_toTopOf="@id/guidelineTitleSep" />
+		app:layout_constraintRight_toRightOf="parent" />
 
 	<ListView
 		android:id="@+id/specificThreadProjectList"
@@ -120,7 +117,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		app:layout_constraintGuide_begin="160dp" />
+		app:layout_constraintGuide_begin="180dp" />
 
 	<androidx.constraintlayout.widget.Guideline
 		android:id="@+id/guidelineInfoSep"

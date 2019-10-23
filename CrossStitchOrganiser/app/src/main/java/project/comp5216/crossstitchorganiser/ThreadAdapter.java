@@ -42,7 +42,6 @@ public class ThreadAdapter extends ArrayAdapter {
 
 		// Set the colour of the rectangle
 		View squareColour = convertView.findViewById(R.id.colourRectangle);
-		thread.getDmc();
 		Map<String, String> dmcToHex = new DMC_toHex().hexColours;
 		if (dmcToHex.containsKey(thread.getDmc())) {
 		    squareColour.setBackgroundColor(Color.parseColor(dmcToHex.get(thread.getDmc())));

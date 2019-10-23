@@ -1,6 +1,7 @@
 package project.comp5216.crossstitchorganiser;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ThreadSpecificPage extends Activity {
 
@@ -46,8 +48,13 @@ public class ThreadSpecificPage extends Activity {
 
 		// The colour square
         View squareColour = findViewById(R.id.specificThreadColourRect);
-		squareColour.setBackground(thisThread.getColour().findColourResource(this));
-		
+		Map<String, String> dmcToHex = new DMC_toHex().hexColours;
+		if (dmcToHex.containsKey(thisThread.getDmc())) {
+			squareColour.setBackgroundColor(Color.parseColor(dmcToHex.get(thisThread.getDmc())));
+		} else {
+			squareColour.setBackground(thisThread.getColour().findColourResource(this));
+		}
+
 		// The amount owned
 		TextView amountOwnedV = findViewById(R.id.specificThreadAmountOwned);
 		amountOwnedV.setText(Double.valueOf(thisThread.getAmountOwned()).toString());

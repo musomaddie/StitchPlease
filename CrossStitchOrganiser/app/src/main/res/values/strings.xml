@@ -38,5 +38,8 @@
 	<string name="threads_add_title">Add Thread</string>
     <string name="threads_inventory_colour_title">Inventory By Colour</string>
     <string name="threads_inventory_full_title">Full Inventory</string>
-    <string name="threads_title">Threads</string>
+	<string name="threads_title">Threads</string>
+	<string name="thread_specific_amount">Skeins Owned:</string>
+	<string name="thread_specific_dmc">DMC:</string>
+	<string name="thread_specific_project_msg">Projects Used In</string>
 </resources>

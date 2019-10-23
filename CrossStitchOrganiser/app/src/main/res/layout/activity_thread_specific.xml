@@ -18,34 +18,74 @@
 		app:layout_constraintBottom_toBottomOf="@id/guidelineTitleSep"
 		/>
 
+
+	<TextView
+		android:id="@+id/specificThreadDmcTxt"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="32dp"
+		android:text="@string/thread_specific_dmc"
+		android:textSize="16sp"
+		android:textStyle="bold"
+		app:layout_constraintRight_toRightOf="@id/guidelineInfoSep"
+		app:layout_constraintTop_toTopOf="parent" />
+
 	<TextView
 		android:id="@+id/specificThreadTitle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="32dp"
+		android:layout_marginRight="16dp"
 		android:text="@string/placeholder"
 		android:textSize="16sp"
 		android:textStyle="bold"
-		app:layout_constraintLeft_toLeftOf="@id/guidelineColourSep"
+		app:layout_constraintLeft_toLeftOf="@id/guidelineInfoSep"
 		app:layout_constraintRight_toRightOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 
 	<TextView
-		android:id="@+id/specificThreadAmountOwned"
+		android:id="@+id/specificThreadAmountTxt"
 		android:layout_width="wrap_content"
-		android:textSize="16sp"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="32dp"
-		android:text="@string/placeholder"
+		android:text="@string/thread_specific_amount"
+		android:textSize="16sp"
+		android:textStyle="bold"
 		app:layout_constraintBottom_toBottomOf="@+id/guidelineTitleSep"
-		app:layout_constraintLeft_toLeftOf="@id/guidelineColourSep"
+		app:layout_constraintRight_toRightOf="@id/guidelineInfoSep"
+		/>
+
+	<TextView
+		android:id="@+id/specificThreadAmountOwned"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginRight="16dp"
+		android:layout_marginBottom="32dp"
+		android:text="@string/placeholder"
+		android:textSize="16sp"
+		app:layout_constraintBottom_toBottomOf="@+id/guidelineTitleSep"
+		app:layout_constraintLeft_toLeftOf="@id/guidelineInfoSep"
 		app:layout_constraintRight_toRightOf="parent" />
+
+	<TextView
+		android:id="@+id/specificThreadProjectText"
+		android:layout_width="wrap_content"
+		android:layout_height="0dp"
+		android:text="@string/thread_specific_project_msg"
+		android:textSize="16sp"
+		android:textStyle="bold"
+		app:layout_constraintBottom_toTopOf="@id/guidelineListSep"
+		app:layout_constraintLeft_toLeftOf="parent"
+		app:layout_constraintRight_toRightOf="parent"
+		app:layout_constraintTop_toTopOf="@id/guidelineTitleSep" />
 
 	<ListView
 		android:id="@+id/specificThreadProjectList"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		app:layout_constraintTop_toBottomOf="@id/guidelineTitleSep"
+		android:layout_height="0dp"
+		app:layout_constraintTop_toTopOf="@id/guidelineListSep"
+		app:layout_constraintRight_toRightOf="parent"
+		app:layout_constraintLeft_toLeftOf="parent"
 		app:layout_constraintBottom_toTopOf="@id/specificThreadBack"
 		/>
 
@@ -74,5 +114,19 @@
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
 		app:layout_constraintGuide_begin="130dp" />
+
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guidelineListSep"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		app:layout_constraintGuide_begin="160dp" />
+
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guidelineInfoSep"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		app:layout_constraintGuide_begin="329dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

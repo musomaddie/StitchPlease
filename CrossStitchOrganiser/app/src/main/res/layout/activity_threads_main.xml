@@ -1,37 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:style="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="@color/background"
+    android:backgroundTintMode="@color/background">
 
     <Button
         android:id="@+id/threadsFullInventoryNav"
-        android:layout_width="fill_parent"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/threads_inventory_full_title"
+        android:layout_marginBottom="16dp"
         android:onClick="onFullInvNavClick"
-        />
+        android:text="@string/threads_inventory_full_title"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/threadsInventoryColourNav"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/threadsInventoryColourNav"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/threads_inventory_colour_title"
+        android:layout_marginBottom="16dp"
         android:onClick="onInvColourNavClick"
-        />
+        android:text="@string/threads_inventory_colour_title"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/threadsAddNav"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
     <Button
         android:id="@+id/threadsAddNav"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/threads_add_title"
         android:onClick="onAddThreadNavClick"
+        android:text="@string/threads_add_title"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
         />
+
     <Button
         android:id="@+id/threadsBack"
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/back"
         android:onClick="onThreadsBackClick"
-        />
+        android:text="@string/back"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

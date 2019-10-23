@@ -52,6 +52,7 @@
 
     <Button
         android:id="@+id/threadsBack"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:onClick="onThreadsBackClick"

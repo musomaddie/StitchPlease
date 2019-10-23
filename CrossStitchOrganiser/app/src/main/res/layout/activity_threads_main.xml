@@ -37,12 +37,12 @@
 
     <Button
         android:id="@+id/threadsAddNav"
-        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onAddThreadNavClick"
         android:text="@string/threads_add_title"
         android:textSize="18sp"
+        style="@style/Widget.AppCompat.Button.Colored"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

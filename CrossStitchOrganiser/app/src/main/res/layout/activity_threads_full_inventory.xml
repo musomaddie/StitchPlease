@@ -18,15 +18,15 @@
 
 	<Button
 		android:id="@+id/FullInventoryBack"
+		android:onClick="onFullInvBackClick"
+		android:text="@string/back"
 		style="@style/Widget.AppCompat.Button.Colored"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:text="@string/back"
 		android:textSize="18sp"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/colourInventoryList"
-		android:onClick="onFullInvBackClick"
 		 />
 </androidx.constraintlayout.widget.ConstraintLayout>

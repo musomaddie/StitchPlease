@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:style="http://schemas.android.com/tools"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:context="project.comp5216.crossstitchorganiser.ThreadsMainPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="@color/background"
@@ -9,7 +11,7 @@
 
     <Button
         android:id="@+id/threadsFullInventoryNav"
-        style="@style/Widget.AppCompat.Button"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -22,6 +24,7 @@
 
     <Button
         android:id="@+id/threadsInventoryColourNav"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -34,6 +37,7 @@
 
     <Button
         android:id="@+id/threadsAddNav"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onAddThreadNavClick"

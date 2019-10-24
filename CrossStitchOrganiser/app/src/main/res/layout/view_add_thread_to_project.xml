@@ -1,22 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:orientation="horizontal"
 	android:id="@+id/llProjectsAddThreadDets"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
+
+<TextView
+	android:id="@+id/projectsAddThreadDmcTxt"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:textSize="16sp"
+	android:text="@string/project_add_thread_dmc"
+	/>
 
 	<EditText
 		android:id="@+id/projectsAddThreadDmc"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:inputType="text"
+	android:textSize="16sp"
 		android:hint="@string/placeholder_project_add_thread_dmc"
+		/>
+	<TextView
+		android:id="@+id/projectsAddThreadAmountTxt"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="20dp"
+		android:text="@string/project_add_thread_amount"
+		android:textSize="16sp"
 		/>
 	<EditText
 		android:id="@+id/projectsAddThreadAmount"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:inputType="numberDecimal"
+	android:textSize="16sp"
 		android:hint="@string/placeholder_project_add_thread_amount"
 		/>
 

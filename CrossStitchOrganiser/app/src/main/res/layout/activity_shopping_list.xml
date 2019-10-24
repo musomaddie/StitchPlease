@@ -26,5 +26,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/share_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="share_onClick"
+        android:text="Share" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

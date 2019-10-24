@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class ShoppingListPage extends Activity {
 	private List<ProjectThread> threadsNeeded;
     private ListView listView;
     private ArrayAdapter<ShoppingListItem> shoppingAdapter;
+    private Button btn_share;
 
 	// Following is used to calculate for each thread
 	private List<ThreadProject> projectsForThisThread;
@@ -33,6 +35,9 @@ public class ShoppingListPage extends Activity {
     private ProjectThreadDao projectThreadDao;
     private ThreadDao threadDao;
 	private ProjectDao projectDao;
+
+	// data that will be shared
+    String example_list;
 
 
     @Override
@@ -60,6 +65,16 @@ public class ShoppingListPage extends Activity {
 
         // item listener time!!
         setUpShoppingItemListener();
+
+
+        //Srting from List<ShoppingListItem> items;
+        for(ShoppingListItem a:items){
+            if(a!=null){
+            example_list=example_list+" "+a.toString();}
+        }
+
+
+
     }
 
     public void onShoppingListBackClick(View view) {
@@ -74,6 +89,8 @@ public class ShoppingListPage extends Activity {
                 ShoppingListItem updateItem = (ShoppingListItem) shoppingAdapter.getItem(position);
                 Log.i(APP_TAG, "Clicked item " + position + ": " + updateItem.getThread());
                 updateItem.mark();
+
+
             }
         });
     }
@@ -212,4 +229,16 @@ public class ShoppingListPage extends Activity {
             Log.e(APP_TAG, ex.getStackTrace().toString());
         }
     }
+
+    //sending shopping list as a plain text message
+    public void share_onClick(View view){
+        String s = example_list; // from List<ShoppingListItem> items;
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Shopping List");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "threads to buy "+s);
+        startActivity(Intent.createChooser(sharingIntent, "Share text via"));
+    }
+
+
 }

@@ -20,10 +20,12 @@ public class HomePage extends AppCompatActivity {
 
     private static final String APP_TAG = "Cross Stitch Organiser";
 
-
+    //write setting request
     public final int REQUEST_WRITE_SETTING =1000;
+
+    //brightness setting field
     public MyCountDownTimer timer;
-    private int brightness = 130;
+    private int brightness;
     ContentResolver contentResolver;
 
 
@@ -37,13 +39,17 @@ public class HomePage extends AppCompatActivity {
 
 
         getPermission();//asking permission to write brightness setting
+
+
+        //battery saver mode
         contentResolver = getApplicationContext().getContentResolver();//getting Content resolver
-        timer = new MyCountDownTimer(contentResolver,10000,1000, brightness);//timer for 10 sec. with 1 sec interval
         try{
-            brightness = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS);}
+            brightness = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS);}//getting the current brightness settings
         catch (Exception e){
             e.printStackTrace();
         }
+        timer = new MyCountDownTimer(contentResolver,30000,1000, brightness);//timer for 30 sec. with 1 sec interval
+
 
 
     }

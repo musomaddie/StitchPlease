@@ -1,9 +1,11 @@
 package project.comp5216.crossstitchorganiser;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,7 +26,7 @@ public class ShoppingListPage extends Activity {
 	private List<ProjectThread> threadsNeeded;
     private ListView listView;
     private ArrayAdapter<ShoppingListItem> shoppingAdapter;
-    private Button btn_share;
+
 
 	// Following is used to calculate for each thread
 	private List<ThreadProject> projectsForThisThread;
@@ -38,6 +40,11 @@ public class ShoppingListPage extends Activity {
 
 	// data that will be shared
     String example_list;
+
+    //battery saver field
+    public MyCountDownTimer timer;
+    private int brightness;
+    ContentResolver contentResolver;
 
 
     @Override
@@ -73,6 +80,14 @@ public class ShoppingListPage extends Activity {
             example_list=example_list+" "+a.toString();}
         }
 
+        //setup battery saver mode
+        contentResolver = getApplicationContext().getContentResolver();//getting Content resolver
+        try{
+            brightness = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS);}//getting the current brightness settings
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        timer = new MyCountDownTimer(contentResolver,30000,1000, brightness);//timer for 30 sec. with 1 sec interval
 
 
     }
@@ -237,8 +252,27 @@ public class ShoppingListPage extends Activity {
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Shopping List");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "threads to buy "+s);
-        startActivity(Intent.createChooser(sharingIntent, "Share text via"));
+        startActivity(Intent.createChooser(sharingIntent, "Share shopping list via"));
     }
 
+
+    @Override
+    public void onUserInteraction(){
+        Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, brightness);
+        timer.start();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        timer.cancel();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        timer.cancel();
+    }
 
 }

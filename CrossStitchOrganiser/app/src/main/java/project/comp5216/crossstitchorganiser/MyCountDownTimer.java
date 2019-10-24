@@ -5,7 +5,7 @@ import android.os.CountDownTimer;
 import android.provider.Settings;
 
 public class MyCountDownTimer extends CountDownTimer {
-    boolean success =false;
+
     ContentResolver contentResolver;
     int brightness;
 
@@ -35,7 +35,7 @@ public class MyCountDownTimer extends CountDownTimer {
 
     @Override
     public void onFinish() {
-        Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, 0);
+        Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, 30);
     }
 
 

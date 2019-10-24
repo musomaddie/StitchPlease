@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
 
 public class ProjectSpecificPage  extends Activity {
@@ -75,10 +75,9 @@ public class ProjectSpecificPage  extends Activity {
 		// Loading the threads
 		listView = findViewById(R.id.specificProjectThreadList);
         loadThreads();
+        Collections.sort(threadsToView, new ProjectThreadComparator());
 		threadAdapter = new ProjectThreadAdapter(this, threadsToView);
 		listView.setAdapter(threadAdapter);
-		// TODO: sort them
-		// TODO: handle clicks on items that don't have a thread buddy
     }
 
     public  void onShoppingListNavClick(View view) {

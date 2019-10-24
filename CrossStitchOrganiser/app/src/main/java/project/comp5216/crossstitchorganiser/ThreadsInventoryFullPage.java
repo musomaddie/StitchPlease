@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ThreadsInventoryFullPage extends Activity {
@@ -33,9 +33,12 @@ public class ThreadsInventoryFullPage extends Activity {
 		db = OrganiserDatabase.getDatabase(this.getApplication().getApplicationContext());
 		threadDao = db.threadDao();
 
+        loadAllThreads();
+        Collections.sort(allThreads, new ThreadComparator());
+
         // Setting up the list view
         listView = (ListView) findViewById(R.id.threadInventoryList);
-		loadAllThreads();
+
         threadAdapter = new ThreadAdapter(this, allThreads);
         listView.setAdapter(threadAdapter);
 

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Collections;
 
 public class ShoppingListPage extends Activity {
 
@@ -54,7 +55,8 @@ public class ShoppingListPage extends Activity {
 		thisProject = getIntent().getStringExtra("projectsIncluded");
 		populateShoppingList();
 
-		// list all items
+		Collections.sort(items, new ShoppingListComparator());
+
 
 		// Setting up the list view
 		listView = findViewById(R.id.shoppingListList);
@@ -73,9 +75,6 @@ public class ShoppingListPage extends Activity {
 				shareText += "[ ] " + item.getThread() + " x " + item.getAmount() + "\n";
 			}
 		}
-
-
-
 	}
 
 	public void onShoppingListBackClick(View view) {

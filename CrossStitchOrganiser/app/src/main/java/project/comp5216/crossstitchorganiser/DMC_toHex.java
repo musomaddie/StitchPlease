@@ -32,6 +32,7 @@ public class DMC_toHex {
 		hexColours.put("498", "#A7132B");
 		hexColours.put("816", "#970B23");
 		hexColours.put("815", "#87071F");
+		hexColours.put("BLANC", "#FFFFFF");
 		hexColours.put("814", "#7B001B");
 		hexColours.put("894", "#FFB2BB");
 		hexColours.put("893", "#FC90A2");

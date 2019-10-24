@@ -57,12 +57,21 @@ public class ThreadsAddPage extends Activity implements AdapterView.OnItemSelect
 		}
 		newThread = new Thread(dmc, colour, amount);
 		if (existing()) {
+			wipeInput();
 			return;
 		}
 		saveThreadToDatabase();
+		wipeInput();
 		Toast.makeText(getApplicationContext(),
 				getResources().getString(R.string.success_thread_creation) + newThread.toString(),
 				Toast.LENGTH_SHORT).show();
+	}
+
+	private void wipeInput() {
+    	EditText dmcET = findViewById(R.id.threadsAddTextDmc);
+    	EditText amountET = findViewById(R.id.threadsAddAmount);
+    	dmcET.getText().clear();
+    	amountET.getText().clear();
 	}
 
     public void onThreadsAddBackClick(View view) {

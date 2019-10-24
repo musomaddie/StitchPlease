@@ -121,11 +121,11 @@ public class ProjectsAddPage extends Activity {
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		// TODO: sensible handling of no image added! (esp for display)
 		newProject = new Project(projectTitle, isWishlist, pathToFile);
 
 
 		// Going through the thread info now
+        List<String> seen = new ArrayList<String>();
 		for(ThreadDetails td : threadDetails) {
 			// TODO: deal with the case where added to this project twice!!
 			String dmc = td.getDmc();
@@ -133,14 +133,28 @@ public class ProjectsAddPage extends Activity {
 				// No message as some might be naturally blank
 				continue;
 			}
+			if (seen.contains(dmc)) {
+			    // If we've already seen the thread ignore it the second time around
+			    continue;
+            }
 			newProject.addThreadAmount(dmc, td.getAmount());
+			seen.add(dmc);
 		}
 		saveProjectToDatabase();
 
+		wipeInput();
 		Toast.makeText(getApplicationContext(),
 				getResources().getString(R.string.success_project_add) + newProject.getTitle(),
 				Toast.LENGTH_SHORT).show();
 	}
+
+	private void wipeInput() {
+        EditText titleEt = findViewById(R.id.projectsAddTitleChange);
+        titleEt.getText().clear();
+        for (ThreadDetails td: threadDetails) {
+            td.clear();
+        }
+    }
 
 	public void onProjectsAddMoreThreadsClick(View view) {
 		// TODO: fix issue with adding more threads moves the submit buttons
@@ -328,6 +342,11 @@ class ThreadDetails {
 		this.dmcET = dmc;
 		this.amountET = amount;
 	}
+
+	public void clear() {
+	    dmcET.getText().clear();
+	    amountET.getText().clear();
+    }
 
 	public String getDmc() {
 		return this.dmcET.getText().toString();

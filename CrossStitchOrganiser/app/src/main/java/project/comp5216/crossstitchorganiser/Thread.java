@@ -16,7 +16,6 @@ public class Thread {
     private String dmc; // This is its number: the unique identifier
     // TODO: decide if we want the user to enter Colour or we calculate ourselves.
     private Colour colour; // The colour of the thread (For grouping later)
-    private int[] rgb; // The RGB colour (calculated by us for display)
     private double amountOwned; // the amount of thread the user owns
     private double amountNeeded; // the amount of thread the user needs for all projects -> calculated by us based on projects reqs.
     private Map<String, Double> projects;
@@ -30,7 +29,6 @@ public class Thread {
     public Thread(String dmc, Colour colour, double amountOwned) {
         this.dmc = dmc;
         this.colour = colour;
-        this.rgb = new int[3];
         this.amountOwned = amountOwned;
         this.amountNeeded = 0;
         this.projects = new HashMap<String, Double>();
@@ -43,10 +41,6 @@ public class Thread {
 
     public Colour getColour() {
         return this.colour;
-    }
-
-    public int[] rgb() {
-        return this.rgb;
     }
 
     public double getAmountOwned() {

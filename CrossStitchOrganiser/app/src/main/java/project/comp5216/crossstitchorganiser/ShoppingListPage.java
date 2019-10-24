@@ -12,39 +12,38 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Arrays;
 import java.util.List;
 
 public class ShoppingListPage extends Activity {
 
-    private static final String APP_TAG = "Cross Stitch Organiser";
+	private static final String APP_TAG = "Cross Stitch Organiser";
 
-    private List<ShoppingListItem> items;
-	private List<String> projects;
-	private List<ProjectThread> threadsNeeded;
-    private ListView listView;
-    private ArrayAdapter<ShoppingListItem> shoppingAdapter;
-    private Button btn_share;
+	private ListView listView;
+	private List<ShoppingListItem> items;
+	private ArrayAdapter<ShoppingListItem> shoppingAdapter;
+	private Button btn_share;
 
-	// Following is used to calculate for each thread
-	private List<ThreadProject> projectsForThisThread;
-	private Thread thisThread;
-	private String thisDmc;
+	private Map<String, Project> allProjects;
+	private Map<String, Double> allThreadAmounts;
+	private Map<String, Thread> allThreads;
 
 	private OrganiserDatabase db;
-    private ProjectThreadDao projectThreadDao;
-    private ThreadDao threadDao;
+	private ProjectThreadDao projectThreadDao;
+	private ThreadDao threadDao;
 	private ProjectDao projectDao;
 
 	// data that will be shared
-    String example_list;
+	String example_list;
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shopping_list);
-        Log.v(APP_TAG, "Loading shopping list page");
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_shopping_list);
+		Log.v(APP_TAG, "Loading shopping list page");
 
 		// Setting up the DB
 		db = OrganiserDatabase.getDatabase(this.getApplication().getApplicationContext());
@@ -52,193 +51,168 @@ public class ShoppingListPage extends Activity {
 		threadDao = db.threadDao();
 		projectDao = db.projectDao();
 
-        // Get the intent with the information on what projects to include
-        populateShoppingList(getIntent().getStringExtra("projectsIncluded"));
+		// Get the intent with the information on what projects to include
+		populateShoppingList(getIntent().getStringExtra("projectsIncluded"));
 
-        // list all items
+		// list all items
 
-        // Setting up the list view
-        listView = findViewById(R.id.shoppingListList);
-        shoppingAdapter = new ShoppingListItemAdapter(this, items);
-        listView.setAdapter(shoppingAdapter);
-
-
-        // item listener time!!
-        setUpShoppingItemListener();
+		// Setting up the list view
+		listView = findViewById(R.id.shoppingListList);
+		shoppingAdapter = new ShoppingListItemAdapter(this, items);
+		listView.setAdapter(shoppingAdapter);
 
 
-        //Srting from List<ShoppingListItem> items;
-        for(ShoppingListItem a:items){
-            if(a!=null){
-            example_list=example_list+" "+a.toString();}
-        }
+		// item listener time!!
+		setUpShoppingItemListener();
 
 
-
-    }
-
-    public void onShoppingListBackClick(View view) {
-        Log.v(APP_TAG, "clicked back from shopping list");
-        finish();
-    }
-
-    private void setUpShoppingItemListener() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ShoppingListItem updateItem = (ShoppingListItem) shoppingAdapter.getItem(position);
-                Log.i(APP_TAG, "Clicked item " + position + ": " + updateItem.getThread());
-                updateItem.mark();
-
-
-            }
-        });
-    }
-
-    private void populateShoppingList(String includedProjects) {
-		if (includedProjects.equals("all")) {
-			loadAllProjectNamesFromDB();
-		} else {
-			projects = Arrays.asList(new String[] {includedProjects});
+		//Srting from List<ShoppingListItem> items;
+		for(ShoppingListItem a:items){
+			if(a!=null){
+				example_list=example_list+" "+a.toString();}
 		}
-        loadDetailsFromDatabase();
-		calculateThreadAmount();
-    }
 
-	private void calculateThreadAmount() {
+
+
+	}
+
+	public void onShoppingListBackClick(View view) {
+		Log.v(APP_TAG, "clicked back from shopping list");
+		finish();
+	}
+
+	private void setUpShoppingItemListener() {
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				ShoppingListItem updateItem = (ShoppingListItem) shoppingAdapter.getItem(position);
+				Log.i(APP_TAG, "Clicked item " + position + ": " + updateItem.getThread());
+				updateItem.mark();
+
+
+			}
+		});
+	}
+
+	private void populateShoppingList(String includedProjects) {
+		if (includedProjects.equals("all")) {
+			loadAllProjectsFromDB();
+			loadAllProjectsThreadsFromDB();
+			loadAllThreadsFromDB();
+			calculateThreadAmountAll();
+		} else {
+			//projects = Arrays.asList(new String[] {includedProjects});
+			//calculateThreadAmount();
+		}
+	}
+
+	private void calculateThreadAmountAll() {
 		items = new ArrayList<ShoppingListItem>();
-		for (ProjectThread thread : threadsNeeded) {
-            // find the thread
-            thisDmc = thread.dmc;
-            findThreadFromDatabase();
-            double amountOwned = 0;
-            if (thisThread != null) {
-                amountOwned = thisThread.getAmountOwned();
-            }
-            // find how much is needed for all projects
-			findProjectsForThreadFromDatabase();
-			double amountNeededForThis = 0;
-            double amountNeeded = 0;
-			for (ThreadProject project : projectsForThisThread) {
-				if (projects.contains(project.projectName)) {
-					// Add it to amount needed for this
-					amountNeededForThis += project.amountNeeded;
-					continue;
-				}
-				amountNeeded += project.amountNeeded;
+		for (String dmc: allThreadAmounts.keySet()) {
+			if (!allThreads.containsKey(dmc)) {
+				addItem(dmc, allThreadAmounts.get(dmc), 0.0);
+				continue;
 			}
-			double amountLeft = amountOwned - amountNeeded;
-			if (amountLeft <= amountNeededForThis) {
-				// we need to add it to the shopping list
-				// HOW MUCH: the difference rounded up
-				double amountToAdd = amountNeededForThis - amountLeft;
-				// if it is under 0.7 round up
-				if (amountToAdd - (int) amountToAdd > 0.7) {
-					amountToAdd ++;
-				}
-				items.add(new ShoppingListItem(thisDmc, (int)amountToAdd + 1));
+			if (allThreadAmounts.get(dmc) > allThreads.get(dmc).getAmountOwned()) {
+				addItem(dmc, allThreadAmounts.get(dmc), allThreads.get(dmc).getAmountOwned());
 			}
-        }
+		}
 	}
 
-	private void findProjectsForThreadFromDatabase() {
-        try {
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-					projectsForThisThread = new ArrayList<ThreadProject>();
-					List<ProjectThreadDatabaseItem> projectsFromDB = projectThreadDao.findProjects(thisDmc);
-					if (projectsFromDB != null) {
-						for (ProjectThreadDatabaseItem item : projectsFromDB) {
-							projectsForThisThread.add(new ThreadProject(
-										item.getProjectName(),
-										item.getAmountNeeded()));
-						}
-					}
-                    return null;
-                }
-            }.execute().get();
-        } catch (Exception ex) {
-            Log.e(APP_TAG, ex.getStackTrace().toString());
-        }
+	private void addItem(String dmc, double amountNeeded, double amountOwned) {
+		double amountLeft = amountNeeded - amountOwned;
+		int amountToAdd = (int) (amountLeft + 1);
+		if (amountLeft - (int) amountLeft > 0.7) {
+			amountToAdd ++;
+		}
+		items.add(new ShoppingListItem(dmc, amountToAdd));
 	}
 
-	private void findThreadFromDatabase() {
-        try {
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-					// find the thread
-					ThreadDatabaseItem threadFromDB = threadDao.findThread(thisDmc);
-					if (threadFromDB != null) {
-						thisThread = new Thread(threadFromDB.getDmc(),
-								Colour.findColour(threadFromDB.getColour()),
-								threadFromDB.getAmountOwned());
-					} else {
-						thisThread = null;
-					}
-                    return null;
-                }
-            }.execute().get();
-        } catch (Exception ex) {
-            Log.e(APP_TAG, ex.getStackTrace().toString());
-        }
-    }
+	private boolean inWishlist(ProjectThreadDatabaseItem item) {
+		return allProjects.get(item.getProjectName()).isWishlist();
+	}
 
-	private void loadAllProjectNamesFromDB() {
-        try {
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-					// Find all the threads associated with each project
-					projects = new ArrayList<String>();
+	private void loadAllProjectsFromDB() {
+		try {
+			new AsyncTask<Void, Void, Void>() {
+				@Override
+				public Void doInBackground(Void ... voids) {
+					allProjects = new HashMap<String, Project>();
 					List<ProjectDatabaseItem> projectsFromDB = projectDao.listAll();
-					if (projectsFromDB != null) {
+					if (projectsFromDB != null && projectsFromDB.size() > 0) {
 						for (ProjectDatabaseItem item : projectsFromDB) {
-							projects.add(item.getTitle());
+							allProjects.put(item.getTitle(),
+									new Project(item.getTitle(), 
+										item.isWishlist(), 
+										item.getPicturePath()));
 						}
 					}
-                    return null;
-                }
-            }.execute().get();
-        } catch (Exception ex) {
-            Log.e(APP_TAG, ex.getStackTrace().toString());
-        }
+					return null;
+				}
+			}.execute().get();
+		} catch(Exception ex) {
+			Log.e(APP_TAG, ex.getStackTrace().toString());
+		}
 	}
 
-	private void loadDetailsFromDatabase() {
-        try {
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-					// Find all the threads associated with each project
-					threadsNeeded = new ArrayList<ProjectThread>();
-					for (String projectTitle : projects) {
-						List<ProjectThreadDatabaseItem> threadsFromDB = projectThreadDao.findThreads(projectTitle);
-						if (threadsFromDB != null && threadsFromDB.size() > 0) {
-							for (ProjectThreadDatabaseItem item: threadsFromDB) {
-								// TODO: deal with case of duplicate threads
-								threadsNeeded.add(new ProjectThread(item.getThreadDmc(), item.getAmountNeeded()));
+	private void loadAllThreadsFromDB() {
+		try {
+			new AsyncTask<Void, Void, Void>() {
+				@Override
+				public Void doInBackground(Void ... voids) {
+					allThreads = new HashMap<String, Thread>();
+					List<ThreadDatabaseItem> threadsFromDB = threadDao.listAll();
+					if (threadsFromDB != null && threadsFromDB.size() > 0) {
+						for (ThreadDatabaseItem item : threadsFromDB) {
+							allThreads.put(item.getDmc(),
+									new Thread(item.getDmc(),
+											Colour.findColour(item.getColour()),
+											item.getAmountOwned()));
+						}
+					}
+					return null;
+				}
+			}.execute().get();
+		} catch(Exception ex) {
+			Log.e(APP_TAG, ex.getStackTrace().toString());
+		}
+	}
+
+	private void loadAllProjectsThreadsFromDB() {
+		try {
+			new AsyncTask<Void, Void, Void>() {
+				@Override
+				public Void doInBackground(Void ... voids) {
+					allThreadAmounts = new HashMap<String, Double>();
+					List<ProjectThreadDatabaseItem> threadsFromDB = projectThreadDao.listAll();
+					if (threadsFromDB != null && threadsFromDB.size() > 0) {
+						for (ProjectThreadDatabaseItem item : threadsFromDB) {
+							if (inWishlist(item)) { continue; }
+							if (allThreadAmounts.containsKey(item.getThreadDmc())) {
+								allThreadAmounts.put(item.getThreadDmc(),
+										allThreadAmounts.get(item.getThreadDmc()) + item.getAmountNeeded());
+							} else {
+								allThreadAmounts.put(item.getThreadDmc(), item.getAmountNeeded());
 							}
 						}
 					}
-                    return null;
-                }
-            }.execute().get();
-        } catch (Exception ex) {
-            Log.e(APP_TAG, ex.getStackTrace().toString());
-        }
-    }
+					return null;
+				}
+			}.execute().get();
+		} catch(Exception ex) {
+			Log.e(APP_TAG, ex.getStackTrace().toString());
+		}
+	}
 
-    //sending shopping list as a plain text message
-    public void share_onClick(View view){
-        String s = example_list; // from List<ShoppingListItem> items;
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Shopping List");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "threads to buy "+s);
-        startActivity(Intent.createChooser(sharingIntent, "Share text via"));
-    }
+	//sending shopping list as a plain text message
+	public void share_onClick(View view){
+		String s = example_list; // from List<ShoppingListItem> items;
+		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Shopping List");
+		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "threads to buy "+s);
+		startActivity(Intent.createChooser(sharingIntent, "Share text via"));
+	}
 
 
 }

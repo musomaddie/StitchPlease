@@ -12,6 +12,7 @@
 		android:layout_marginTop="8dp"
 		android:layout_marginBottom="8dp"
 		android:text="@string/placeholder"
+		android:textStyle="bold"
 		android:textSize="16sp"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintRight_toRightOf="@+id/guidelineAmountSep"
@@ -36,6 +37,6 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
-		app:layout_constraintGuide_begin="175dp" />
+		app:layout_constraintGuide_begin="274dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

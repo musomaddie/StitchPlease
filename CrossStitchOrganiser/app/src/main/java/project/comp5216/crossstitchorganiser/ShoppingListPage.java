@@ -14,7 +14,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Arrays;
 import java.util.List;
 
 public class ShoppingListPage extends Activity {
@@ -24,7 +23,6 @@ public class ShoppingListPage extends Activity {
 	private ListView listView;
 	private List<ShoppingListItem> items;
 	private ArrayAdapter<ShoppingListItem> shoppingAdapter;
-	private Button btn_share;
 
 	private Map<String, Project> allProjects;
 	private Map<String, Double> allThreadAmounts;
@@ -37,7 +35,7 @@ public class ShoppingListPage extends Activity {
 	private ProjectDao projectDao;
 
 	// data that will be shared
-	String example_list;
+	private String shareText;
 
 
 	@Override
@@ -68,10 +66,12 @@ public class ShoppingListPage extends Activity {
 		setUpShoppingItemListener();
 
 
-		//Srting from List<ShoppingListItem> items;
-		for(ShoppingListItem a:items){
-			if(a!=null){
-				example_list=example_list+" "+a.toString();}
+		shareText = "";
+		for (ShoppingListItem item : items) {
+			if (item != null) {
+				// TODO: customise this based on tick or not
+				shareText += "[ ] " + item.getThread() + " x " + item.getAmount() + "\n";
+			}
 		}
 
 
@@ -214,11 +214,10 @@ public class ShoppingListPage extends Activity {
 
 	//sending shopping list as a plain text message
 	public void share_onClick(View view){
-		String s = example_list; // from List<ShoppingListItem> items;
 		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
 		sharingIntent.setType("text/plain");
 		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Shopping List");
-		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "threads to buy "+s);
+		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "threads to buy:\n"+shareText);
 		startActivity(Intent.createChooser(sharingIntent, "Share text via"));
 	}
 

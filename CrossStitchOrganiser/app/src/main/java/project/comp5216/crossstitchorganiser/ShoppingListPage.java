@@ -29,6 +29,7 @@ public class ShoppingListPage extends Activity {
 	private Map<String, Project> allProjects;
 	private Map<String, Double> allThreadAmounts;
 	private Map<String, Thread> allThreads;
+	private String thisProject;
 
 	private OrganiserDatabase db;
 	private ProjectThreadDao projectThreadDao;
@@ -52,7 +53,8 @@ public class ShoppingListPage extends Activity {
 		projectDao = db.projectDao();
 
 		// Get the intent with the information on what projects to include
-		populateShoppingList(getIntent().getStringExtra("projectsIncluded"));
+		thisProject = getIntent().getStringExtra("projectsIncluded");
+		populateShoppingList();
 
 		// list all items
 
@@ -94,16 +96,11 @@ public class ShoppingListPage extends Activity {
 		});
 	}
 
-	private void populateShoppingList(String includedProjects) {
-		if (includedProjects.equals("all")) {
-			loadAllProjectsFromDB();
-			loadAllProjectsThreadsFromDB();
-			loadAllThreadsFromDB();
-			calculateThreadAmountAll();
-		} else {
-			//projects = Arrays.asList(new String[] {includedProjects});
-			//calculateThreadAmount();
-		}
+	private void populateShoppingList() {
+		loadAllProjectsFromDB();
+		loadAllProjectsThreadsFromDB();
+		loadAllThreadsFromDB();
+		calculateThreadAmountAll();
 	}
 
 	private void calculateThreadAmountAll() {
@@ -129,7 +126,17 @@ public class ShoppingListPage extends Activity {
 	}
 
 	private boolean inWishlist(ProjectThreadDatabaseItem item) {
+		if (!thisProject.equals("all")) {
+			return false;
+		}
 		return allProjects.get(item.getProjectName()).isWishlist();
+	}
+
+	private boolean inProject(ProjectThreadDatabaseItem item) {
+		if (thisProject.equals("all")) { 
+			return true;
+		}
+		return thisProject.equals(item.getProjectName());
 	}
 
 	private void loadAllProjectsFromDB() {
@@ -188,6 +195,7 @@ public class ShoppingListPage extends Activity {
 					if (threadsFromDB != null && threadsFromDB.size() > 0) {
 						for (ProjectThreadDatabaseItem item : threadsFromDB) {
 							if (inWishlist(item)) { continue; }
+							if (!inProject(item)) { continue; }
 							if (allThreadAmounts.containsKey(item.getThreadDmc())) {
 								allThreadAmounts.put(item.getThreadDmc(),
 										allThreadAmounts.get(item.getThreadDmc()) + item.getAmountNeeded());

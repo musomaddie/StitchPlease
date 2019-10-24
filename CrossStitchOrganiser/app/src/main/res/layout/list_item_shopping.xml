@@ -1,14 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+    <CheckBox
+        android:id="@+id/listItemShoppingCheckBox"
+        android:layout_width="30dp"
+		android:layout_height="30dp"
+		android:layout_marginTop="8dp"
+		android:layout_marginBottom="8dp"
+		android:text=""
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintLeft_toLeftOf="parent"
+		app:layout_constraintRight_toRightOf="@id/guidelineBoxSep"
+		/>
+
+	<View
+		android:id="@+id/colourRectangle"
+		android:layout_width="30dp"
+		android:layout_height="30dp"
+		android:layout_marginTop="8dp"
+		android:layout_marginBottom="8dp"
+		android:background="#DDDDDD"
+		android:visibility="visible"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintRight_toRightOf="@id/guidelineColourSep"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintLeft_toLeftOf="@id/guidelineBoxSep"
+		/>
 
     <TextView
-        android:id="@+id/listItemShopping"
+        android:id="@+id/listItemShoppingDmc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:layout_marginBottom="8dp"
         android:text="@string/placeholder"
-        />
+		android:textSize="16sp"
+		android:textStyle="bold"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintLeft_toLeftOf="@id/guidelineColourSep"
+		/>
+
+	<TextView
+		android:id="@+id/listItemShoppingAmount"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:layout_marginBottom="8dp"
+		android:text="@string/placeholder"
+		android:textSize="16sp"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintLeft_toLeftOf="@id/guidelineDmcSep"
+		/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineBoxSep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="50dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineDmcSep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="175dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineColourSep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="100dp" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,6 +29,7 @@
 
         <activity android:name=".ThreadSpecificPage"> </activity>
         <activity android:name=".ThreadsAddPage"> </activity>
+        <activity android:name=".ThreadChangeQuantityPage"></activity>
         <activity android:name=".ThreadsInventoryColourPage"> </activity>
         <activity android:name=".ThreadsInventoryFullPage"> </activity>
         <activity android:name=".ThreadsMainPage"> </activity>

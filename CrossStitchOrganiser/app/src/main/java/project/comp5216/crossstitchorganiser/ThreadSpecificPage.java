@@ -1,6 +1,7 @@
 package project.comp5216.crossstitchorganiser;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -73,11 +74,25 @@ public class ThreadSpecificPage extends Activity {
         finish();
     }
 
+    public void onEditClick(View view) {
+		Intent intent = new Intent(this, ThreadChangeQuantityPage.class);
+		intent.putExtra("dmc", thisDmc);
+		startActivity(intent);
+	}
+
     private void loadProjects() {
     	projectsToView = new ArrayList<ThreadProject>();
 		for (String projectTitle : thisThread.getProjects().keySet()) {
 			projectsToView.add(new ThreadProject(projectTitle, thisThread.getProjects().get(projectTitle)));
 		}
+	}
+
+	@Override
+	protected void onResume() {
+    	super.onResume();
+    	loadThread();
+		TextView amountOwnedV = findViewById(R.id.specificThreadAmountOwned);
+		amountOwnedV.setText(Double.valueOf(thisThread.getAmountOwned()).toString());
 	}
 
 	private void loadThread() {

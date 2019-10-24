@@ -70,7 +70,7 @@ public class ProjectsAddPage extends Activity {
         // Loading the dynamic thread amount adding!
         LinearLayout ll = (LinearLayout) findViewById(R.id.projectsAddThreadDets);
         threadDetails = new ArrayList<ThreadDetails>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 10; i++) {
 			View view = LayoutInflater.from(this).inflate(R.layout.view_add_thread_to_project, null);
 			EditText dmcET = view.findViewById(R.id.projectsAddThreadDmc);
 			EditText amountET = view.findViewById(R.id.projectsAddThreadAmount);

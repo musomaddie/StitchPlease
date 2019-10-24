@@ -1,50 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/specificProjectTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+	<TextView
+		android:id="@+id/specificProjectTitle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:text="@string/placeholder"
-		/>
+		android:textSize="18sp"
+		android:textStyle="bold"
+		app:layout_constraintBottom_toBottomOf="@id/guidelineTitleSep"
+		app:layout_constraintLeft_toLeftOf="@id/guidelinePictureSep"
+		app:layout_constraintRight_toRightOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
 
 	<ImageView
 		android:id="@+id/specificProjectImage"
-		android:layout_width="100dp"
-		android:layout_height="100dp"
+		android:layout_width="125dp"
+		android:layout_height="125dp"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintRight_toRightOf="@id/guidelinePictureSep"
+		app:layout_constraintBottom_toBottomOf="@id/guidelineTitleSep"
+		app:layout_constraintLeft_toLeftOf="parent"
 		/>
 
 	<Button
 		android:id="@+id/specificProjectBuy"
+        style="@style/Widget.AppCompat.Button.Colored"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="@string/projects_buy"
 		android:onClick="onProjectBuyClick"
+		android:text="@string/projects_buy"
 		android:visibility="gone"
+		android:textSize="16sp"
+		app:layout_constraintTop_toTopOf="@id/guidelineTitleSep"
+		app:layout_constraintRight_toRightOf="parent"
+		app:layout_constraintBottom_toBottomOf="@id/guidelineButtonSep"
+		app:layout_constraintLeft_toLeftOf="@id/guidelinePictureSep"
 		/>
+
+	<TextView
+		android:id="@+id/specificProjectThreadText"
+		android:layout_width="wrap_content"
+		android:layout_height="0dp"
+		android:layout_marginTop="8dp"
+		android:text="@string/project_specific_thread_msg"
+		android:textSize="16sp"
+		android:textStyle="bold"
+		app:layout_constraintBottom_toBottomOf="@id/guidelineRequiredSep"
+		app:layout_constraintLeft_toLeftOf="parent"
+		app:layout_constraintRight_toRightOf="parent"
+		app:layout_constraintTop_toTopOf="@id/guidelineButtonSep" />
 
 	<ListView
 		android:id="@+id/specificProjectThreadList"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:layout_weight="1" />
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		app:layout_constraintTop_toTopOf="@id/guidelineRequiredSep"
+		app:layout_constraintRight_toRightOf="parent"
+		app:layout_constraintBottom_toBottomOf="@id/specificProjectBack"
+		app:layout_constraintLeft_toLeftOf="parent"
+		/>
 
 	<Button
-        android:id="@+id/projectShoppingList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/shopping_list_title"
-        android:onClick="onShoppingListNavClick"
-        />
+		android:id="@+id/projectShoppingList"
+        style="@style/Widget.AppCompat.Button.Colored"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:onClick="onShoppingListNavClick"
+		android:text="@string/shopping_list_title"
+		android:textSize="16sp"
+		app:layout_constraintTop_toTopOf="@id/guidelineTitleSep"
+		app:layout_constraintRight_toRightOf="@id/guidelinePictureSep"
+		app:layout_constraintBottom_toBottomOf="@id/guidelineButtonSep"
+		app:layout_constraintLeft_toLeftOf="parent"
+		/>
 
-    <Button
-        android:id="@+id/specificProjectBack"
-        android:layout_width="fill_parent"
+	<Button
+		android:id="@+id/specificProjectBack"
+		android:onClick="onSpecificProjectBackClick"
+		android:text="@string/back"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/back"
-        android:onClick="onSpecificProjectBackClick"
-        />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guidelineTitleSep"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		app:layout_constraintGuide_begin="150dp" />
+
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guidelinePictureSep"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		app:layout_constraintGuide_begin="150dp" />
+
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guidelineButtonSep"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		app:layout_constraintGuide_begin="215dp" />
+
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guidelineRequiredSep"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		app:layout_constraintGuide_begin="250dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,11 +19,12 @@
 	<string name="projects_add_choose_image">Choose Image</string>
 	<string name="projects_add_title">Add a New Project</string>
 	<string name="projects_buy">Buy Project!</string>
-    <string name="projects_current_title">Current Projects</string>
+	<string name="projects_current_title">Current Projects</string>
 	<string name="projects_title">Projects</string>
 	<string name="projects_add_more_threads">Add more threads to project </string>
 	<string name="projects_wishlist_title">Wish List</string>
 	<string name="projects_add_wishlist_text">Is this on your wishlist? </string>
+	<string name="project_specific_thread_msg">Threads required:</string>
 
 	<string name="shopping_list_title">Shopping List</string>
 	<string name="submit">Submit</string>

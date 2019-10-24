@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -94,9 +95,10 @@ public class ProjectSpecificPage  extends Activity {
     }
 
     public void onProjectBuyClick(View view) {
-    	Log.v(APP_TAG, "clicked buy project!");
-    	// TODO: the work of moving this project to purchased. (should be
-    	// straightfoward)
+        thisProject.buy();
+        updateProjectDatabase();
+        Toast.makeText(getApplicationContext(), "You have successfully bought this project!",
+                Toast.LENGTH_SHORT).show();
     }
 
     private void loadThreads() {
@@ -105,6 +107,21 @@ public class ProjectSpecificPage  extends Activity {
 			threadsToView.add(new ProjectThread(key, thisProject.getThreadsAmountNeeded().get(key)));
 		}
 	}
+
+	private void updateProjectDatabase() {
+        try {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    // Find the project from the database
+                    projectDao.updateBuy(false, thisProject.getTitle());
+                    return null;
+                }
+            }.execute().get();
+        } catch (Exception ex) {
+            Log.e(APP_TAG, ex.getStackTrace().toString());
+        }
+    }
 
 	private void loadDetailsFromDatabase() {
         try {

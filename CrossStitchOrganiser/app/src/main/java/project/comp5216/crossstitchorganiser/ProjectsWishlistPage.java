@@ -47,6 +47,16 @@ public class ProjectsWishlistPage extends Activity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadWishlistProjects();
+        listView = (ListView) findViewById(R.id.projectsWishlistList);
+        projectAdapter = new ProjectAdapter(this, wishlistProjects);
+        listView.setAdapter(projectAdapter);
+
+    }
+
     public void onProjectsWishlistBackClick(View view) {
         Log.d(APP_TAG, "clicked back from projects wishlist");
         finish();

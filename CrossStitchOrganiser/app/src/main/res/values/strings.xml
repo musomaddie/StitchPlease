@@ -47,4 +47,6 @@
 	<string name="thread_specific_amount">Skeins Owned:</string>
 	<string name="thread_specific_dmc">DMC:</string>
 	<string name="thread_specific_project_msg">Projects Used In</string>
+
+	<string name="share">Share</string>
 </resources>

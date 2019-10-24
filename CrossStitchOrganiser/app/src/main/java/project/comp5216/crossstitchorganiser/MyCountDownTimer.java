@@ -1,15 +1,8 @@
-package comp5216.sydney.edu.au.logoutlistener;
+package project.comp5216.crossstitchorganiser;
 
 import android.content.ContentResolver;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.CountDownTimer;
 import android.provider.Settings;
-import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 
 public class MyCountDownTimer extends CountDownTimer {
     boolean success =false;
@@ -28,10 +21,10 @@ public class MyCountDownTimer extends CountDownTimer {
 
 
 
-    public MyCountDownTimer(ContentResolver contentResolver ,long millisInFuture, long countDownInterval) {
+    public MyCountDownTimer(ContentResolver contentResolver , long millisInFuture, long countDownInterval, int current_brightness) {
         super(millisInFuture, countDownInterval);
         this.contentResolver = contentResolver;
-        Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, brightness);
+        this.brightness=current_brightness;
             }
 
     @Override
@@ -44,6 +37,8 @@ public class MyCountDownTimer extends CountDownTimer {
     public void onFinish() {
         Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, 0);
     }
+
+
 
 
 

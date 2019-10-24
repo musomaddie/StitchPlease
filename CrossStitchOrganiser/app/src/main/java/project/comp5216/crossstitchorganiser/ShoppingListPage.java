@@ -1,9 +1,11 @@
 package project.comp5216.crossstitchorganiser;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,6 +39,11 @@ public class ShoppingListPage extends Activity {
 
 	// data that will be shared
 	private String shareText;
+
+    //battery saver field
+    public MyCountDownTimer timer;
+    private int brightness;
+    ContentResolver contentResolver;
 
 
 	@Override
@@ -75,6 +82,17 @@ public class ShoppingListPage extends Activity {
 				shareText += "[ ] " + item.getThread() + " x " + item.getAmount() + "\n";
 			}
 		}
+
+		//setup battery saver mode
+		contentResolver = getApplicationContext().getContentResolver();//getting Content resolver
+		try {
+			brightness = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS);
+		}//getting the current brightness settings
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		timer = new MyCountDownTimer(contentResolver, 30000, 1000, brightness);//timer for 30 sec. with 1 sec interval
+
 	}
 
 	public void onShoppingListBackClick(View view) {
@@ -220,5 +238,24 @@ public class ShoppingListPage extends Activity {
 		startActivity(Intent.createChooser(sharingIntent, "Share text via"));
 	}
 
+
+    @Override
+    public void onUserInteraction(){
+        Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, brightness);
+        timer.start();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        timer.cancel();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        timer.cancel();
+    }
 
 }

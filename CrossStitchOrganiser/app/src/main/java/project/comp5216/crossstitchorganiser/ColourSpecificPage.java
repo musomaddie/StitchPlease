@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -99,4 +100,6 @@ public class ColourSpecificPage extends Activity {
 			Log.e(APP_TAG, ex.getStackTrace().toString());
         }
 	}
+
+
 }

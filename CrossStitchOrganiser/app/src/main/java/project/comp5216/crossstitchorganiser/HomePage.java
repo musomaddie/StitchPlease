@@ -3,7 +3,6 @@ package project.comp5216.crossstitchorganiser;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.lifecycle.LifecycleObserver;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;

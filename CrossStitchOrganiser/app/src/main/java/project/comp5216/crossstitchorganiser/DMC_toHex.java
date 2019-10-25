@@ -88,7 +88,7 @@ public class DMC_toHex {
 		hexColours.put("223", "#CC847C");
 		hexColours.put("3722", "#BC6C64");
 		hexColours.put("3721", "#A14B51");
-		hexColours.put("221", "#8.83E+45");
+		hexColours.put("221", "#9C294A");
 		hexColours.put("778", "#DFB3BB");
 		hexColours.put("3727", "#DBA9B2");
 		hexColours.put("316", "#B7737F");
@@ -231,7 +231,7 @@ public class DMC_toHex {
 		hexColours.put("913", "#6DAB77");
 		hexColours.put("912", "#1B9D6B");
 		hexColours.put("911", "#189065");
-		hexColours.put("910", "#1.87E+58");
+		hexColours.put("910", "#30745B");
 		hexColours.put("909", "#156F49");
 		hexColours.put("3818", "#115A3B");
 		hexColours.put("369", "#D7EDCC");
@@ -314,7 +314,7 @@ public class DMC_toHex {
 		hexColours.put("422", "#C69F7B");
 		hexColours.put("3828", "#B78B61");
 		hexColours.put("420", "#A07042");
-		hexColours.put("869", "#8.35E+41");
+		hexColours.put("869", "#995C30");
 		hexColours.put("728", "#E4B468");
 		hexColours.put("783", "#CE9124");
 		hexColours.put("782", "#AE7720");
@@ -413,7 +413,7 @@ public class DMC_toHex {
 		hexColours.put("437", "#E4BB8E");
 		hexColours.put("436", "#CB9051");
 		hexColours.put("435", "#B87748");
-		hexColours.put("434", "#9.85E+35");
+		hexColours.put("434", "#B26746");
 		hexColours.put("433", "#7A451F");
 		hexColours.put("801", "#653919");
 		hexColours.put("898", "#492A13");

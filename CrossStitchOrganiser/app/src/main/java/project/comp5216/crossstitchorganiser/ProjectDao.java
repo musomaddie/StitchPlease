@@ -21,9 +21,6 @@ public interface ProjectDao {
 	@Insert
 	void insert(ProjectDatabaseItem project);
 
-    @Insert
-	void insertAll(ProjectDatabaseItem ... projects);
-
     @Query("DELETE FROM projects")
     void deleteAll();
 

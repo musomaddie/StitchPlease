@@ -32,6 +32,12 @@ public enum Colour {
 			return new ColorDrawable(context.getResources().getColor(R.color.blackColour));
 		}
 	},
+	BROWN {
+		public String transformText() { return "Brown"; }
+		public ColorDrawable findColourResource(Context context) {
+			return new ColorDrawable((context.getResources().getColor(R.color.brownColour)));
+		}
+	},
 	RED {
 		public String transformText() { 
 			return "Red"; 

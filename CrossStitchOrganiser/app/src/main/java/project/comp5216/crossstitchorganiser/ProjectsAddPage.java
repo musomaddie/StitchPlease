@@ -67,6 +67,7 @@ public class ProjectsAddPage extends Activity {
         setContentView(R.layout.activity_projects_add);
         Log.v(APP_TAG, "Loading Projects Add Page");
 
+
         // Loading the dynamic thread amount adding!
         LinearLayout ll = (LinearLayout) findViewById(R.id.projectsAddThreadDets);
         threadDetails = new ArrayList<ThreadDetails>();
@@ -82,6 +83,7 @@ public class ProjectsAddPage extends Activity {
 		db = OrganiserDatabase.getDatabase(this.getApplication().getApplicationContext());
 		projectDao = db.projectDao();
 		projectThreadDao = db.projectThreadDao();
+       // deleteAllFromDatabase();
 
         init(); //calling button constructor
 
@@ -129,6 +131,9 @@ public class ProjectsAddPage extends Activity {
 		for(ThreadDetails td : threadDetails) {
 			// TODO: deal with the case where added to this project twice!!
 			String dmc = td.getDmc();
+			if (dmc == null) {
+			    continue;
+            }
 			if (dmc.equals("")) {
 				// No message as some might be naturally blank
 				continue;
@@ -154,18 +159,16 @@ public class ProjectsAddPage extends Activity {
         for (ThreadDetails td: threadDetails) {
             td.clear();
         }
+
     }
 
 	public void onProjectsAddMoreThreadsClick(View view) {
-		// TODO: fix issue with adding more threads moves the submit buttons
-		// (etc). off screen
-		Log.v(APP_TAG, "Clicked add more threads");
         LinearLayout ll = (LinearLayout) findViewById(R.id.projectsAddThreadDets);
         for (int i = 0; i < 5; i++) {
 			View viewLL = LayoutInflater.from(this).inflate(R.layout.view_add_thread_to_project, null);
-			EditText dmcET = view.findViewById(R.id.projectsAddThreadDmc);
-			EditText amountET = view.findViewById(R.id.projectsAddThreadAmount);
-			threadDetails.add(new ThreadDetails(dmcET, amountET));
+			EditText dmcET = viewLL.findViewById(R.id.projectsAddThreadDmc);
+            EditText amountET = viewLL.findViewById(R.id.projectsAddThreadAmount);
+            threadDetails.add(new ThreadDetails(dmcET, amountET));
 			ll.addView(viewLL);
 		}
 
@@ -214,6 +217,20 @@ public class ProjectsAddPage extends Activity {
             }
         }.execute();
 	}
+
+    private void deleteAllFromDatabase() {
+        try {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    projectDao.deleteAll();
+                    return null;
+                }
+            }.execute().get();
+        } catch(Exception ex) {
+            Log.e(APP_TAG, ex.getStackTrace().toString());
+        }
+    }
 
 	private void loadAllFromDatabase() {
         try {
@@ -344,20 +361,28 @@ class ThreadDetails {
 	}
 
 	public void clear() {
-	    dmcET.getText().clear();
-	    amountET.getText().clear();
+	    try {
+            dmcET.getText().clear();
+            amountET.getText().clear();
+        } catch (NullPointerException ex) {
+	        return;
+        }
+
     }
 
 	public String getDmc() {
-		return this.dmcET.getText().toString();
+	    try {
+            return this.dmcET.getText().toString();
+        } catch (NullPointerException ex) {
+	        return null;
+        }
 	}
 
 	public double getAmount() {
 		try {
 			return Double.parseDouble(this.amountET.getText().toString());
 		} catch (NumberFormatException e) {
-			// Just returning 1 as a default value.
-			// TODO: mention somewhere this happens!
+			// TODO: this means for shopping list will want you to buy 2! Fix this
 			return 1.0;
 		}
 	}

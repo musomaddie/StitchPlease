@@ -21,9 +21,4 @@ public interface ProjectThreadDao {
 	@Insert
 	void insert(ProjectThreadDatabaseItem item);
 
-	@Insert
-	void insertAll(ProjectThreadDatabaseItem... items);
-
-	@Query("DELETE FROM projectsToThreads")
-	void deleteAll();
 }

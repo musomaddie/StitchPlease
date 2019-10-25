@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class ThreadsInventoryColourPage extends Activity {

@@ -2,8 +2,6 @@ package project.comp5216.crossstitchorganiser;
 
 import java.util.Comparator;
 
-import android.util.Log;
-
 public class ThreadComparator implements Comparator<Thread> {
 
     private boolean isNumeric(String s) {

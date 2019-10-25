@@ -4,9 +4,7 @@ package project.comp5216.crossstitchorganiser;
 
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Thread {

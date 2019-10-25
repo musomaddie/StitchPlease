@@ -20,10 +20,6 @@ public class ShoppingListItem {
         return this.amount;
     }
 
-    public boolean isFound() {
-        return this.found;
-    }
-
     public void mark() {
         this.found = !this.found;
     }

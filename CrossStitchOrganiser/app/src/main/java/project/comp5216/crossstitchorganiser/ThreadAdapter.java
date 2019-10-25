@@ -2,7 +2,6 @@ package project.comp5216.crossstitchorganiser;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +43,11 @@ public class ThreadAdapter extends ArrayAdapter {
 		View squareColour = convertView.findViewById(R.id.colourRectangle);
 		Map<String, String> dmcToHex = new DMC_toHex().hexColours;
 		if (dmcToHex.containsKey(thread.getDmc())) {
-		    squareColour.setBackgroundColor(Color.parseColor(dmcToHex.get(thread.getDmc())));
+		    try {
+                squareColour.setBackgroundColor(Color.parseColor(dmcToHex.get(thread.getDmc())));
+            } catch (IllegalArgumentException ex) {
+		        squareColour.setBackground(thread.getColour().findColourResource(getContext()));
+            }
         } else {
             squareColour.setBackground(thread.getColour().findColourResource(getContext()));
         }

@@ -1,0 +1,9 @@
+click
+coverage
+Flask
+itsdangerous
+Jinja2
+MarkupSafe
+pytest
+setuptools
+Werkzeug

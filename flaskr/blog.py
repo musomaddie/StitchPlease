@@ -8,6 +8,31 @@ from flask.db import get_db
 bp = Blueprint("blog", __name__)
 
 
+@bp.route("/create", methods=("GET", "POST"))
+@login_required
+def create():
+    if request.method == "POST":
+        title = request.form["title"]
+        body = request.form["body"]
+        error = None
+
+        if not title:
+            error = "Title is required."
+
+        if not error:
+            db = get_db()
+            db.execute(
+                """ INSERT INTO post (title, body, author_id)
+                    VALUES (?, ?, ?)""",
+                (title, body, g.user["id"])
+            )
+            db.commit()
+            return redirect(url_for("blog.index"))
+
+        flash(error)
+    return render_template("blog/create.html")
+
+
 @bp.route("/")
 def index():
     db = get_db()

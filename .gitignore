@@ -1,2 +1,16 @@
 env
+
 __pycache__
+*pyc
+
+instance/
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+dist/
+build/
+*.egg_info/
+
+*.swp

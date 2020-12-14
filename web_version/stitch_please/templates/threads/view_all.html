@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block header %}
+	<h1>{% block title %}View All Threads{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+	{% for thread in threads %}
+		<h2>{{ thread['dmc_value'] }}</h2>
+	{% endfor %}
+{% endblock %}

@@ -1,15 +1,14 @@
 import os
 
-from flask import Flask
+from . import threads
 
-from . import db
+from flask import Flask
 
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY="dev",
-        DATABASE=os.path.join(app.instance_path, 'stitch_please.sqlite'),
     )
 
     if test_config is None:
@@ -22,5 +21,6 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    db.init_app(app)
+    app.register_blueprint(threads.bp)
+
     return app

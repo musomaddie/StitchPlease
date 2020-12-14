@@ -1,9 +1,15 @@
 DROP TABLE IF EXISTS thread;
+DROP TABLE IF EXISTS user;
 
 CREATE TABLE thread(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	dmc_value STRING NOT NULL,
-	colour STRING NOT NULL
+	dmc_value TEXT NOT NULL,
+	colour TEXT NOT NULL
+);
+
+CREATE TABLE user(
+	username TEXT PRIMARY KEY,
+	password TEXT NOT NULL
 );
 
 /* Insert a handful of example threads */

@@ -35,7 +35,7 @@ def create_user():
     password = request.json["password"]
     with open("db_scripts/user/create.sql") as f:
         cursor.execute(f.read(),
-                       (username, generate_password_hash(password)))
+                       (username, password))
 
     conn.commit()
     conn.close()
@@ -43,16 +43,15 @@ def create_user():
     return jsonify({"username": username}), 201
 
 
-@app.route("/db_api/user/get", methods=["POST"])
-def get_user():
+@app.route("/db_api/user/get/<string:username>", methods=["GET"])
+def get_user(username):
     """ NOTE: not smart error handling: only call if sure user exists """
     conn, cursor = _get_db()
-    username = request.json["username"]
     with open("db_scripts/user/get.sql") as f:
         cursor.execute(f.read(), (username, ))
     user = cursor.fetchone()
-    return jsonify({"username", user["username"],
-                    "password", user["password"]}), 201
+    return jsonify({"username": user[0],
+                    "password": user[1]}), 201
 
 
 @app.route("/db_api/threads/view", methods=["GET"])

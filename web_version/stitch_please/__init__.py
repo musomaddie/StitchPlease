@@ -1,6 +1,7 @@
 import os
 
 from . import threads
+from . import user
 
 from flask import Flask
 
@@ -22,5 +23,6 @@ def create_app(test_config=None):
         pass
 
     app.register_blueprint(threads.bp)
+    app.register_blueprint(user.bp)
 
     return app

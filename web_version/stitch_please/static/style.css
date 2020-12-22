@@ -1,0 +1,41 @@
+/* START OVERALL SETUP */
+:root {
+	--primary: #4B0082;
+	--secondary: #00636C;
+	--third: #8D4600;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+
+/* START nav bar styling */
+nav > ul > li { 	
+	list-style-type: none;
+	margin: 0 2vw;
+	font-size: 2vh;
+
+	padding: 1vw;
+}
+
+nav > ul > li > a {
+	text-decoration: none;
+}
+
+nav {
+	width: 100vw;
+	background-color: var(--primary);
+	color: white;
+}
+
+nav > ul {
+	margin: 0;
+	padding: 0;
+
+	display: flex;
+}
+
+body { 
+	margin: 0;
+}
+/* END nav bar styling */

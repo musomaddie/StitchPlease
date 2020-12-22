@@ -1,8 +1,25 @@
 <!doctype html>
 <title>{% block title %}{% endblock%} - Stitch Please </title>
+<script src="https://kit.fontawesome.com/eb3ebffa23.js" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<!-- NAV BAR -->
 <nav>
-	<h1> PUT THINGS HERE </h1>
+	<ul>
+		<li> <i class="fas fa-cog"></i> Settings</li>
+		<li>Threads</li>
+		<!-- <li> <img class="nav_logo" --> 
+		<!-- 		  src="{{ url_for('static', filename='images/logo-placeholder-png.png') }}" -->
+		<!-- 		  alt="Stitch, Please! (logo)"></li> -->
+		<li>Projects</li>
+		{% if g.user %}
+			<li>Logout</li>
+		{% else %}
+			<li>Sign Up</li>
+			<li>Login</li>
+		{% endif %}
+	</ul>
 </nav>
 
 <section class="content">

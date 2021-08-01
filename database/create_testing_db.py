@@ -7,5 +7,8 @@ cursor = db.cursor()
 with open("schema.sql") as f:
     cursor.executescript(f.read())
 
+with open("testing_values.sql") as f:
+    cursor.executescript(f.read())
+
 db.commit()
 db.close()

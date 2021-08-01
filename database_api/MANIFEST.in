@@ -1,0 +1,4 @@
+include stitch_please_database/schema.sql
+graft stitch_please_database/static
+graft stitch_please_database/templates
+global-exclude *.pyc

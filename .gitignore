@@ -12,6 +12,6 @@ htmlcov/
 dist/
 build/
 *.egg
-*.egg-info/
+**.egg-info/
 
 *.swp

@@ -9,7 +9,8 @@ DROP TABLE IF EXISTS project_threads;
 CREATE TABLE thread_details(
 	dmc_value STRING PRIMARY KEY,
 	color STRING NOT NULL,
-	description STRING NOT NULL
+	description STRING NOT NULL,
+	hexcode STRING
 );
 
 CREATE TABLE user_details(

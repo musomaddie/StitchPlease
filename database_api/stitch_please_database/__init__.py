@@ -1,7 +1,7 @@
 import os
 
 from . import db
-from . import auth
+from . import threads
 from flask import Flask
 
 
@@ -23,13 +23,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # A simple age that says hello
-    @app.route("/hello")
-    def hello():
-        return "Hello World!"
-
     db.init_app(app)
-
-    app.register_blueprint(auth.bp)
+    app.register_blueprint(threads.bp)
 
     return app
